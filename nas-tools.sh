@@ -557,8 +557,7 @@ echoContent white "-----------------------------------------"
 echoContent yellow "1. 一键安装Nas-tools
 2. 安装Rclone
 3. Gclone获取网盘Token
-4. Rclone挂载网盘
-5. 反代Nas-tools"
+4. Rclone挂载网盘"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
