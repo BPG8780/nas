@@ -191,7 +191,7 @@ EOF
   if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
-    image: emby/embyserver
+    image: emby/embyserver_arm64v8
     container_name: emby
     environment:
       - PUID=0
