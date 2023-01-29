@@ -76,7 +76,7 @@ function install_rclone(){
 function install_gclone(){
   if [[ ! -f /usr/bin/gclone ]];then
     echo -e "`curr_date` 正在安装gclone,请稍等..."
-    bash <(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/main/gclone.sh )
+    bash <(curl -sL https://github.com/BPG8780/nas/blob/main/gclone.sh )
     if [[ -f /usr/bin/rclone ]];then
       sleep 1s
       echo
@@ -109,7 +109,7 @@ services:
     volumes:
       - /home/nas-tools/config:/config
       - /downloads:/downloads
-      - /mnt:/mnt
+      - /media:/media
       - /root/.config/rclone:/root/.config/rclone
     environment: 
       - PUID=0
@@ -133,7 +133,7 @@ services:
     volumes:
       - /home/qbittorrent/config:/config
       - /downloads:/downloads
-      - /mnt/video:/mnt/video
+      - /media/video:/media/video
       - /home/qbittorrent/watch:/watch  
     restart: unless-stopped
   jackett:
@@ -166,7 +166,7 @@ services:
     image: allanpk716/chinesesubfinder:latest
     volumes:
       - /home/chinesesubfinder:/config
-      - /mnt/video:/mnt/video
+      - /media/video:/media/video
       - /home/chinesesubfinder/cache:/app/cache
     environment:
       - PUID=0
@@ -175,24 +175,37 @@ services:
     ports:
       - 19035:19035
     restart: unless-stopped
+  nginx-proxy-manager-zh:
+    image: 'chishin/nginx-proxy-manager-zh:latest'
+    restart: always
+    ports:
+      - '800:800'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - /home/nginx/data:/data
+      - /home/nginx/letsencrypt:/etc/letsencrypt
 EOF
   echoContent yellow `echo -ne "请问是否安装Emby到本机[y/n]"`
   read embyyn
   if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
-    image: lscr.io/linuxserver/emby
+    image: emby/embyserver
     container_name: emby
     environment:
       - PUID=0
       - PGID=0
+      - GIDLIST=0
       - TZ=Asia/Shanghai
     volumes:
-      - /home/emby:/config
-      - /mnt:/mnt
+      - /home/embyserver/programdata:/config
+      - /media/video:/media/video
     ports:
       - 8096:8096
       - 8920:8920
+    devices:
+      - /dev/dri:/dev/dri
     restart: unless-stopped
 EOF
   else
@@ -200,11 +213,11 @@ EOF
   fi
   docker-compose -f /root/docker-compose.yml up -d
   if [[ $? -eq 0 ]]; then
-    echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder安装完毕······"
+    echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装完毕······"
     echoContent yellow "开始将检测网盘挂载状态写入开机启动项···"
     cat >/etc/init.d/check <<EOF
 #!/bin/bash
-dir1=/mnt/video
+dir1=/media/video
 # dir2=/mnt/onedrive
 while true; do
     sleep 5s
@@ -213,6 +226,7 @@ while true; do
             docker restart chinesesubfinder
             docker restart qbittorrent
             docker restart nas-tools
+            docker restart nginx-proxy-manager-zh
             if [[ `docker ps |grep emby` != "" ]];then
               docker restart emby
             fi
@@ -227,12 +241,12 @@ EOF
     update-rc.d check defaults
     echoContent green "检测网盘挂载状态写入开机启动项完成···"
     if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
-      echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password)，Emby端口:8096"
+      echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
     else
-      echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin, nas-tools端口3000(默认用户名admin,密码password)"
+      echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin, nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)"
     fi
   else
-    echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder安装失败······"
+    echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装失败······"
   fi
 }
 function insall_proxy(){
@@ -422,9 +436,9 @@ function mount_drive(){
                         echo
                 done
                 echo
-                read -p "请输入需要挂载目录的路径（如不是绝对路径则挂载到/mnt/video下）:" path
+                read -p "请输入需要挂载目录的路径（如不是绝对路径则挂载到/media/video下）:" path
                 if [[ "${path:0:1}" != "/" ]];then
-                        path="/mnt/video/${path}"
+                        path="/media/video/${path}"
                 fi
                 while [[ 0 ]]
                 do
@@ -482,7 +496,7 @@ KillMode=none
 Restart=on-failure
 RestartSec=5
 User = root
-ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --use-mmap --daemon-timeout=10m --dir-cache-time 24h --poll-interval 1h --vfs-cache-mode writes --cache-dir=/tmp/vfs_cache --buffer-size 512M --vfs-read-chunk-size 128M --vfs-read-chunk-size-limit 1G --log-level INFO --log-file=/home/rclone.log
+ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --use-mmap --daemon-timeout=10m --dir-cache-time 3h --poll-interval 1h --vfs-cache-mode minimal --cache-dir=/tmp/vfs_cache --buffer-size 1G --vfs-read-chunk-size 512M --vfs-read-chunk-size-limit 1G --vfs-cache-max-size 20G --log-level INFO --log-file=/home/rclone.log
 ExecStop=/bin/fusermount -u ${path}
 Restart = on-abort
 [Install]
@@ -527,8 +541,8 @@ function menu(){
 ###################################################################
 #                                                                 #
 #           Nas-tools 一键梭哈脚本                                #
-#                    Powerby 翔翎                                 #
-#                    Blog：https://blog.20120714.xyz              #
+#                       粑屁修改版                                 #
+#                                                                 #
 #                                                                 #
 ###################################################################"
 echoContent red "请注意：不建议内存低于2GB，磁盘空间低于40G的设备执行安装"
@@ -536,7 +550,7 @@ echo
 echo
 echoContent skyBlue "友情提醒：
 如果打算映射rclone挂载的网盘给qBittorrent、chinesesubfinder和Emby；
-请先完成网盘挂载(挂载目录选择默认的/mnt/video)"
+请先完成网盘挂载(挂载目录选择默认的/media/video)"
 echoContent white "-----------------------------------------"
 echo -e "${RED}0. 退出脚本${END}"
 echoContent white "-----------------------------------------"
@@ -544,7 +558,6 @@ echoContent yellow "1. 一键安装Nas-tools
 2. 安装Rclone
 3. Gclone获取网盘Token
 4. Rclone挂载网盘
-5. 反代Nas-tools"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
