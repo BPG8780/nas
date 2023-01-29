@@ -43,7 +43,7 @@ apt install lsof -y || yum install lsof -y
 function check_docker(){
   if test -z "$(which docker)"; then
     echoContent yellow "检测到系统未安装docker，开始安装docker"
-    curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+    wget -qO- get.docker.com | bash
   fi
   if test -z "$(which docker-compose)"; then
     echoContent yellow "检测到系统未安装docker-compose，开始安装docker-compose"
