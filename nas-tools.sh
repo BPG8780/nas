@@ -76,7 +76,7 @@ function install_rclone(){
 function install_gclone(){
   if [[ ! -f /usr/bin/gclone ]];then
     echo -e "`curr_date` 正在安装gclone,请稍等..."
-    bash <(curl -sL https://github.com/BPG8780/nas/blob/main/gclone.sh )
+    bash <(curl -sL https://raw.githubusercontent.com/BPG8780/nas/main/gclone.sh )
     if [[ -f /usr/bin/rclone ]];then
       sleep 1s
       echo
