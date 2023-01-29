@@ -191,7 +191,7 @@ EOF
   if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
-    image: emby/embyserver_arm64v8
+    image: codion/emby_crack:4.7.6.0-ARM
     container_name: emby
     environment:
       - PUID=0
@@ -199,7 +199,7 @@ EOF
       - GIDLIST=0
       - TZ=Asia/Shanghai
     volumes:
-      - /home/embyserver/programdata:/config
+      - /home/emby/programdata:/config
       - /media/video:/media/video
     ports:
       - 8096:8096
@@ -539,11 +539,11 @@ function menu(){
   clear
     echoContent green "
 ###################################################################
-#                                                                 #
-#           Nas-tools 一键梭哈脚本                                 #
-#                       Emby是ARM64                               #
+#                      脚本Fork翔翎居                              #
+#                   Nas-tools 一键梭哈脚本                         #
+#                      Emby开心版是ARM64                           #
 #                       AMD 请勿安装                               #
-#                       粑屁修改版                                 #
+#                        粑屁修改版                                #
 #                                                                 #
 #                                                                 #
 ###################################################################"
