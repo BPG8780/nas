@@ -175,9 +175,9 @@ services:
       - /home/nginx/data:/data
       - /home/nginx/letsencrypt:/etc/letsencrypt
 EOF
-  echoContent yellow `echo -ne "请问是否安装Emby到本机[y/n]"`
-  read embyyn
-  if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
+  echoContent yellow `echo -ne "请问是否安装Emby开心版到本机《《《特别注意(1)是ARM版本,(2)是AMD版本》》》[n/不用]"`
+  read emby
+  if [ "$emby" = "1" ]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
     image: codion/emby_crack:4.7.6.0-ARM
@@ -197,9 +197,31 @@ EOF
       - /dev/dri:/dev/dri
     restart: unless-stopped
 EOF
+  echo 1
+elif [ "$emby" = "2" ]; then
+    cat>>/root/docker-compose.yml <<EOF
+  emby:
+    image: codion/emby_crack:4.7.6.0-X86
+    container_name: emby
+    environment:
+      - PUID=0
+      - PGID=0
+      - GIDLIST=0
+      - TZ=Asia/Shanghai
+    volumes:
+      - /home/emby/programdata:/config
+      - /media/video:/media/video
+    ports:
+      - 8096:8096
+      - 8920:8920
+    devices:
+      - /dev/dri:/dev/dri
+    restart: unless-stopped
+EOF
+  echo 2
   else
     echo
-  fi
+  fi  
   docker-compose -f /root/docker-compose.yml up -d
   if [[ $? -eq 0 ]]; then
     echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装完毕······"
@@ -530,8 +552,8 @@ function menu(){
 ###################################################################
 #                      脚本Fork翔翎居                             #
 #                   Nas-tools 一键梭哈脚本                        #
-#                      Emby开心版是ARM64                          #
-#                       AMD 请勿安装                              #
+#                  Emby开心版是ARM64/AMD64                        #
+#                博客：https://bug.878088.xyz                     #
 #                        粑屁修改版                               #
 #                                                                 #
 #                                                                 #
