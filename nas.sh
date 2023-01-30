@@ -39,6 +39,52 @@ echoContent(){
 clear
 # check root
 [[ $EUID -ne 0 ]] && echo -e "${red}错误: $ 必须使用root用户运行此脚本！\n" && exit 1
+if [[ -f /etc/redhat-release ]]; then
+    release="centos"
+elif cat /etc/issue | grep -Eqi "debian"; then
+    release="debian"
+elif cat /etc/issue | grep -Eqi "ubuntu"; then
+    release="ubuntu"
+elif cat /etc/issue | grep -Eqi "centos|red hat|redhat"; then
+    release="centos"
+elif cat /proc/version | grep -Eqi "debian"; then
+    release="debian"
+elif cat /proc/version | grep -Eqi "ubuntu"; then
+    release="ubuntu"
+elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
+    release="centos"
+elif cat /etc/system-release-cpe | grep -Eqi "amazon_linux"; then
+    release="amazon_linux"
+else
+    echo -e "${red}未检测到系统版本，请联系脚本作者！${plain}\n" && exit 1
+fi
+
+arch=$(arch)
+
+if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
+  arch="amd64"
+elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
+  arch="arm64"
+elif [[ $arch == "s390x" ]]; then
+  arch="s390x"
+else
+  arch="amd64"
+  echo -e "${red}检测架构失败，使用默认架构: ${arch}${plain}"
+fi
+sys(){
+[ -f /etc/os-release ] && grep -i pretty_name /etc/os-release | cut -d \" -f2 && return
+[ -f /etc/lsb-release ] && grep -i description /etc/lsb-release | cut -d \" -f2 && return
+[ -f /etc/redhat-release ] && awk '{print $0}' /etc/redhat-release && return;}
+op=`sys`
+version=`uname -r | awk -F "-" '{print $1}'`
+vi=`systemd-detect-virt`
+white "VPS操作系统: $(blue "$op") \c" && white " 内核版本: $(blue "$version") \c" && white " CPU架构 : $(blue "$arch") \c" && white " 虚拟化类型: $(blue "$vi")"
+sleep 2
+
+if [ $(getconf WORD_BIT) != '32' ] && [ $(getconf LONG_BIT) != '64' ] ; then
+    echo "本软件不支持 32 位系统(x86)，请使用 64 位系统(x86_64)，如果检测有误，请联系作者"
+    exit -1
+fi
 apt install lsof -y || yum install lsof -y
 function check_docker(){
   if test -z "$(which docker)"; then
@@ -175,7 +221,7 @@ services:
       - /home/nginx/data:/data
       - /home/nginx/letsencrypt:/etc/letsencrypt
 EOF
-  echoContent yellow `echo -ne "请问是否安装Emby到本机《《《特别注意(1)是ARM版本,(2)是AMD版本》》》[n/不用]"`
+  echoContent yellow `echo -ne "请问是否安装Emby开心版到本机《《《特别注意(1)是ARM版本,(2)是AMD版本》》》[n/不用]"`
   read emby
   if [ "$emby" = "1" ]; then
     cat>>/root/docker-compose.yml <<EOF
@@ -552,8 +598,8 @@ function menu(){
 ###################################################################
 #                      脚本Fork翔翎居                             #
 #                   Nas-tools 一键梭哈脚本                        #
-#                      Emby开心版是ARM64                          #
-#                       AMD 请勿安装                              #
+#                  Emby开心版是ARM64/AMD64                        #
+#                博客：https://bug.878088.xyz                     #
 #                        粑屁修改版                               #
 #                                                                 #
 #                                                                 #
