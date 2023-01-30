@@ -252,8 +252,6 @@ EOF
     echoContent green "检测网盘挂载状态写入开机启动项完成···"
     if [[ ${embyyno} == "Y" ]]||[[ ${embyyno} == "y" ]]; then
       echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
-    if [[ ${embyyno} == "O" ]]||[[ ${embyyno} == "o" ]]; then
-      echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
     else
       echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin, nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)"
     fi
