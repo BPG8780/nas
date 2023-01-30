@@ -198,7 +198,9 @@ EOF
     restart: unless-stopped
 EOF
   else
-      if [[ ${embyynm} == "M" ]]||[[ ${embyynm} == "m" ]]; then
+    echo
+  fi
+  if [[ ${embyynm} == "M" ]]||[[ ${embyyn} == "m" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
     image: codion/emby_crack:4.7.6.0-X86
@@ -219,7 +221,8 @@ EOF
     restart: unless-stopped
 EOF
   else
-  fi
+    echo
+  fi  
   docker-compose -f /root/docker-compose.yml up -d
   if [[ $? -eq 0 ]]; then
     echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装完毕······"
