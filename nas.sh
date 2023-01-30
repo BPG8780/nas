@@ -176,9 +176,8 @@ services:
       - /home/nginx/letsencrypt:/etc/letsencrypt
 EOF
   echoContent yellow `echo -ne "请问是否安装Emby到本机[y/n]"`
-  read embyyn
-  read embyynn
-  if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
+  read embyyno
+  if [[ ${embyyno} == "Y" ]]||[[ ${embyyno} == "y" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
     image: codion/emby_crack:4.7.6.0-X86
@@ -201,7 +200,7 @@ EOF
   else
     echo
   fi
-  if [[ ${embyynn} == "N" ]]||[[ ${embyynn} == "n" ]]; then
+  if [[ ${embyyno} == "O" ]]||[[ ${embyynn} == "o" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
     image: codion/emby_crack:4.7.6.0-ARM
