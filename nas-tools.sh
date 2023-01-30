@@ -90,7 +90,7 @@ function install_gclone(){
     echoContent yellow "本机已安装gclone.无须安装."
   fi
   echoContent purple "开始使用gclone来获取Google Api Tkoen，请按照命令行提示操作·····"
-  gclone config
+  rclone config
 }
 function install_nas-tools(){
   if [[ `docker ps|grep nas-tools` != "" ]]; then
