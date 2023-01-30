@@ -112,8 +112,8 @@ services:
       - /media:/media
       - /root/.config/rclone:/root/.config/rclone
     environment: 
-      - PUID=0
-      - PGID=0
+      - PUID=1000
+      - PGID=1000
       - UMASK=022
       - TZ=Asia/Shanghai
       - NASTOOL_AUTO_UPDATE=true
@@ -496,7 +496,7 @@ KillMode=none
 Restart=on-failure
 RestartSec=5
 User = root
-ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --use-mmap --daemon-timeout=10m --dir-cache-time 3h --poll-interval 1h --vfs-cache-mode minimal --cache-dir=/tmp/vfs_cache --buffer-size 1G --vfs-read-chunk-size 512M --vfs-read-chunk-size-limit 1G --vfs-cache-max-size 20G --log-level INFO --log-file=/home/rclone.log
+ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --use-mmap --daemon-timeout=10m --dir-cache-time 3h --poll-interval 1h --vfs-cache-mode minimal --vfs-cache-max-age 10s --cache-dir=/tmp/vfs_cache --buffer-size 1G --vfs-read-chunk-size 512M --vfs-read-chunk-size-limit 1G --vfs-cache-max-size 20M --log-level INFO --log-file=/home/rclone.log
 ExecStop=/bin/fusermount -u ${path}
 Restart = on-abort
 [Install]
