@@ -112,8 +112,8 @@ services:
       - /media:/media
       - /root/.config/rclone:/root/.config/rclone
     environment: 
-      - PUID=1000
-      - PGID=1000
+      - PUID=1555
+      - PGID=1555
       - UMASK=022
       - TZ=Asia/Shanghai
       - NASTOOL_AUTO_UPDATE=true
