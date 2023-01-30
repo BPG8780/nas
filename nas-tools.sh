@@ -74,23 +74,9 @@ function install_rclone(){
 }
 
 function install_gclone(){
-  if [[ ! -f /usr/bin/gclone ]];then
-    echo -e "`curr_date` 正在安装gclone,请稍等..."
-    bash <(curl -sL https://raw.githubusercontent.com/BPG8780/nas/main/gclone.sh )
-    if [[ -f /usr/bin/rclone ]];then
-      sleep 1s
-      echo
-      echoContent green "gclone安装成功."
-    else
-      echoContent red  "安装失败.请重新运行脚本安装."
-      exit 1
-    fi
-  else
-    echo
-    echoContent yellow "本机已安装gclone.无须安装."
   fi
-  echoContent purple "开始使用gclone来获取Google Api Tkoen，请按照命令行提示操作·····"
-  gclone config
+  echoContent purple "开始使用Rclone来获取配置，请按照命令行提示操作·····"
+  rclone config
 }
 function install_nas-tools(){
   if [[ `docker ps|grep nas-tools` != "" ]]; then
@@ -558,7 +544,7 @@ echo -e "${RED}0. 退出脚本${END}"
 echoContent white "-----------------------------------------"
 echoContent yellow "1. 一键安装Nas-tools
 2. 安装Rclone
-3. Gclone获取网盘Token
+3. Rclone获取配置
 4. Rclone挂载网盘"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
