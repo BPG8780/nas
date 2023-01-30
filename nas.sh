@@ -198,8 +198,7 @@ EOF
     restart: unless-stopped
 EOF
   else
-  read embyyno
-  if [[ ${embyyno} == "O" ]]||[[ ${embyynn} == "o" ]]; then
+  if [[ ${embyyno} == "O" ]]||[[ ${embyyno} == "o" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
     image: codion/emby_crack:4.7.6.0-X86
