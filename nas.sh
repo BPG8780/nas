@@ -175,7 +175,7 @@ services:
       - /home/nginx/data:/data
       - /home/nginx/letsencrypt:/etc/letsencrypt
 EOF
-  echoContent yellow `echo -ne "请问是否安装Emby到本机《《《特别注意(1)是ARM版本,(2)是AMD版本》》》[y/o/n]"`
+  echoContent yellow `echo -ne "请问是否安装Emby到本机《《《特别注意(1)是ARM版本,(2)是AMD版本》》》[n/不用]"`
   read emby
   if [ "$emby" = "1" ]; then
     cat>>/root/docker-compose.yml <<EOF
