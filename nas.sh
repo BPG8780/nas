@@ -176,7 +176,29 @@ services:
       - /home/nginx/letsencrypt:/etc/letsencrypt
 EOF
   echoContent yellow `echo -ne "请问是否安装Emby到本机《《《特别注意(Y/y)是ARM版本,(O/o)是AMD版本》》》[y/o/n]"`
-  if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
+  read embyynm
+  if [[ ${embyynm} == "Y" ]]||[[ ${embyynm} == "y" ]]; then
+    cat>>/root/docker-compose.yml <<EOF
+  emby:
+    image: codion/emby_crack:4.7.6.0-ARM
+    container_name: emby
+    environment:
+      - PUID=0
+      - PGID=0
+      - GIDLIST=0
+      - TZ=Asia/Shanghai
+    volumes:
+      - /home/emby/programdata:/config
+      - /media/video:/media/video
+    ports:
+      - 8096:8096
+      - 8920:8920
+    devices:
+      - /dev/dri:/dev/dri
+    restart: unless-stopped
+EOF
+  else
+      if [[ ${embyynm} == "M" ]]||[[ ${embyynm} == "m" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
     image: codion/emby_crack:4.7.6.0-X86
@@ -197,7 +219,6 @@ EOF
     restart: unless-stopped
 EOF
   else
-    echo
   fi
   docker-compose -f /root/docker-compose.yml up -d
   if [[ $? -eq 0 ]]; then
