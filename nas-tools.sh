@@ -75,8 +75,6 @@ function install_rclone(){
 
 function install_gclone(){
    if [[ -f /usr/bin/rclone ]];then
-    fi
-  else
     echo
     echoContent yellow "本机已安装Rclone.无须安装."
   fi
