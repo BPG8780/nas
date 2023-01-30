@@ -74,20 +74,23 @@ function install_rclone(){
 }
 
 function install_gclone(){
+  if [[ ! -f /usr/bin/rclone ]];then
+    echo -e "`curr_date` 正在安装gclone,请稍等..."
+    bash <(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/main/gclone.sh )
     if [[ -f /usr/bin/rclone ]];then
       sleep 1s
       echo
-      echoContent green "Rclone安装成功."
+      echoContent green "gclone安装成功."
     else
       echoContent red  "安装失败.请重新运行脚本安装."
       exit 1
     fi
   else
     echo
-    echoContent yellow "本机已安装Rclone.无须安装."
+    echoContent yellow "本机已安装gclone.无须安装."
   fi
   echoContent purple "开始使用gclone来获取Google Api Tkoen，请按照命令行提示操作·····"
-  gclone config
+  rclone config
 }
 function install_nas-tools(){
   if [[ `docker ps|grep nas-tools` != "" ]]; then
