@@ -197,6 +197,7 @@ EOF
       - /dev/dri:/dev/dri
     restart: unless-stopped
 EOF
+  else
   read embyyno
   if [[ ${embyyno} == "O" ]]||[[ ${embyynn} == "o" ]]; then
     cat>>/root/docker-compose.yml <<EOF
