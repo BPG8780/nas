@@ -197,10 +197,7 @@ EOF
       - /dev/dri:/dev/dri
     restart: unless-stopped
 EOF
-  else
-    echo
-  fi
-  if [[ ${embyynm} == "M" ]]||[[ ${embyyn} == "m" ]]; then
+elif [[ ${embyynm} == "M" ]]||[[ ${embyyn} == "m" ]]; then
     cat>>/root/docker-compose.yml <<EOF
   emby:
     image: codion/emby_crack:4.7.6.0-X86
