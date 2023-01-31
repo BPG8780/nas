@@ -264,7 +264,7 @@ function insall_proxy(){
   echoContent purple  "一键吃内存"
   read pproxy
   if [[ ${pproxy} == "1" ]]; then
-    wget -qO memory_usage.sh https://raw.githubusercontent.com/Mrmineduce21/Oracle_OneKey_Active/main/memory_usage.sh && chmod +x memory_usage.sh && bash memory_usage.sh consume 1G
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/Mrmineduce21/Oracle_OneKey_Active/main/memory_usage.sh)
   elif [[ ${pproxy} == "2" ]]; then
     echoContent yellow "开始安装nginx并准备签发证书，请提前将相应域名的A记录解析到该机器······\n在下面执行步骤中，有询问y或n的地方全部输入y"
     sleep 3s
