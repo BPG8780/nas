@@ -106,24 +106,39 @@ services:
       - UMASK=022
       - TZ=Asia/Shanghai
       - NASTOOL_AUTO_UPDATE=true
+    deploy:
+      resources:
+         limits:
+            cpus: 0.40
+            memory: 1G
+         reservations:
+            memory: 200M
     restart: always
     network_mode: bridge
     hostname: nas-tools
     container_name: nas-tools
-  qbittorrent:
-    image: ghcr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    network_mode: "host"
+  qbittorrentee:
+    image: superng6/qbittorrentee:latest
+    container_name: qbittorrentee    
     environment:
       - PUID=0
       - PGID=0
       - TZ=Asia/Shanghai
-      - WEBUI_PORT=8088
     volumes:
-      - /home/qbittorrent/config:/config
-      - /downloads:/downloads
+      - /home/qbittorrentee/appdata/config:/config
       - /media/video:/media/video
-      - /home/qbittorrent/watch:/watch  
+      - /downloads:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
+    deploy:
+      resources:
+         limits:
+            cpus: 0.40
+            memory: 1G
+         reservations:
+            memory: 200M
     restart: unless-stopped
   jackett:
     image: lscr.io/linuxserver/jackett
@@ -193,6 +208,13 @@ EOF
     ports:
       - 8096:8096
       - 8920:8920
+    deploy:
+      resources:
+         limits:
+            cpus: 0.40
+            memory: 1G
+         reservations:
+            memory: 200M  
     devices:
       - /dev/dri:/dev/dri
     restart: unless-stopped
@@ -214,6 +236,13 @@ elif [ "$emby" = "2" ]; then
     ports:
       - 8096:8096
       - 8920:8920
+    deploy:
+      resources:
+         limits:
+            cpus: 0.40
+            memory: 1G
+         reservations:
+            memory: 200M
     devices:
       - /dev/dri:/dev/dri
     restart: unless-stopped
@@ -222,7 +251,7 @@ EOF
   else
     echo
   fi  
-  docker-compose -f /root/docker-compose.yml up -d
+  docker-compose -f /root/docker-compose --compatibility up -d
   if [[ $? -eq 0 ]]; then
     echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装完毕······"
     echoContent yellow "开始将检测网盘挂载状态写入开机启动项···"
@@ -252,9 +281,9 @@ EOF
     update-rc.d check defaults
     echoContent green "检测网盘挂载状态写入开机启动项完成···"
     if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
-      echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
+      echoContent green "qbittorrent端口8080（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
     else
-      echoContent green "qbittorrent端口8088（初始用户名admin，密码adminadmin, nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
+      echoContent green "qbittorrent端口8080（初始用户名admin，密码adminadmin, nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
     fi
   else
     echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装失败······"
@@ -507,11 +536,14 @@ KillMode=none
 Restart=on-failure
 RestartSec=5
 User = root
-ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --use-mmap --daemon-timeout=10m --dir-cache-time 3h --poll-interval 1h --vfs-cache-mode minimal --vfs-cache-max-age 10s --cache-dir=/tmp/vfs_cache --buffer-size 1G --vfs-read-chunk-size 512M --vfs-read-chunk-size-limit 1G --vfs-cache-max-size 20M --log-level INFO --log-file=/home/rclone.log
+WorkingDirectory=/usr/bin/rclone
+ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --multi-thread-streams 1024 --multi-thread-cutoff 128M --network-mode --vfs-cache-mode minimal --vfs-cache-max-age 10s --cache-dir=/tmp/vfs_cache --vfs-cache-max-size 100G --vfs-read-chunk-size-limit off --buffer-size 64K --vfs-read-chunk-size 64K --vfs-read-wait 0ms --vfs-read-chunk-size-limit 64K --log-level INFO --log-file=/media/rclone.log
 ExecStop=/bin/fusermount -u ${path}
 Restart = on-abort
 [Install]
-WantedBy = multi-user.target" > /lib/systemd/system/rclone-${list[rclone_config_name]}.service
+WantedBy = multi-user.target
+[Service]
+CPUQuota=60%" > /lib/systemd/system/rclone-${list[rclone_config_name]}.service
         sleep 2s
         echo -e "`curr_date` 服务创建成功。"
         if [ ! -f /etc/fuse.conf ]; then
