@@ -128,7 +128,7 @@ services:
     deploy:
       resources:
          limits:
-            cpus: 0.40
+            cpus: "1.50"
             memory: 1G
          reservations:
             memory: 200M
@@ -230,7 +230,7 @@ EOF
   else
     echo
   fi  
-  docker-compose -f /root/docker-compose --compatibility up -d
+  docker-compose -f /root/docker-compose.yml up -d
   if [[ $? -eq 0 ]]; then
     echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装完毕······"
     echoContent yellow "开始将检测网盘挂载状态写入开机启动项···"
