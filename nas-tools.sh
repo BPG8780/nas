@@ -106,13 +106,6 @@ services:
       - UMASK=022
       - TZ=Asia/Shanghai
       - NASTOOL_AUTO_UPDATE=true
-    deploy:
-      resources:
-         limits:
-            cpus: 0.40
-            memory: 1G
-         reservations:
-            memory: 200M
     restart: always
     network_mode: bridge
     hostname: nas-tools
