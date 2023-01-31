@@ -536,14 +536,14 @@ KillMode=none
 Restart=on-failure
 RestartSec=5
 User = root
-WorkingDirectory=/usr/bin/rclone
+WorkingDirectory = /usr/bin/rclone
 ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --multi-thread-streams 1024 --multi-thread-cutoff 128M --network-mode --vfs-cache-mode minimal --vfs-cache-max-age 10s --cache-dir=/tmp/vfs_cache --vfs-cache-max-size 100G --vfs-read-chunk-size-limit off --buffer-size 64K --vfs-read-chunk-size 64K --vfs-read-wait 0ms --vfs-read-chunk-size-limit 64K --log-level INFO --log-file=/media/rclone.log
 ExecStop=/bin/fusermount -u ${path}
 Restart = on-abort
 [Install]
 WantedBy = multi-user.target
 [Service]
-CPUQuota=60%" > /lib/systemd/system/rclone-${list[rclone_config_name]}.service
+CPUQuota = 60%" > /lib/systemd/system/rclone-${list[rclone_config_name]}.service
         sleep 2s
         echo -e "`curr_date` 服务创建成功。"
         if [ ! -f /etc/fuse.conf ]; then
