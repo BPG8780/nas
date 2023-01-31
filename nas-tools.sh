@@ -201,13 +201,6 @@ EOF
     ports:
       - 8096:8096
       - 8920:8920
-    deploy:
-      resources:
-         limits:
-            cpus: 0.40
-            memory: 1G
-         reservations:
-            memory: 200M  
     devices:
       - /dev/dri:/dev/dri
     restart: unless-stopped
@@ -229,13 +222,6 @@ elif [ "$emby" = "2" ]; then
     ports:
       - 8096:8096
       - 8920:8920
-    deploy:
-      resources:
-         limits:
-            cpus: 0.40
-            memory: 1G
-         reservations:
-            memory: 200M
     devices:
       - /dev/dri:/dev/dri
     restart: unless-stopped
