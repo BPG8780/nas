@@ -123,7 +123,6 @@ services:
     volumes:
       - /home/qbittorrent/config:/config
       - /media/video:/media/video
-      - /downloads:/downloads
   jackett:
     image: lscr.io/linuxserver/jackett
     container_name: jackett
