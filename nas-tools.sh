@@ -110,22 +110,20 @@ services:
     network_mode: bridge
     hostname: nas-tools
     container_name: nas-tools
-  qbittorrentee:
-    image: superng6/qbittorrentee:latest
-    container_name: qbittorrentee    
+  qbittorrent:
+    container_name: qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent
+    ports:
+      - "8080:8080"
     environment:
-      - PUID=0
-      - PGID=0
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
       - TZ=Asia/Shanghai
     volumes:
-      - /home/qbittorrentee/appdata/config:/config
+      - /home/qbittorrent/config:/config
       - /media/video:/media/video
       - /downloads:/downloads
-    ports:
-      - 6881:6881
-      - 6881:6881/udp
-      - 8080:8080
-    restart: unless-stopped
   jackett:
     image: lscr.io/linuxserver/jackett
     container_name: jackett
