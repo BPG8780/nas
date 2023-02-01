@@ -117,21 +117,20 @@ services:
     network_mode: bridge
     hostname: nas-tools
     container_name: nas-tools
-  qbittorrentee:
-    image: superng6/qbittorrentee:latest
-    container_name: qbittorrentee    
+  qbittorrent:
+    container_name: qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent
+    ports:
+      - "8080:8080"
     environment:
-      - PUID=0
-      - PGID=0
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
       - TZ=Asia/Shanghai
     volumes:
-      - /home/qbittorrentee/appdata/config:/config
+      - /home/qbittorrent/config:/config
       - /media/video:/media/video
       - /downloads:/downloads
-    ports:
-      - 6881:6881
-      - 6881:6881/udp
-      - 8080:8080
     deploy:
       resources:
          limits:
@@ -139,7 +138,6 @@ services:
             memory: 5G
          reservations:
             memory: 200M
-    restart: unless-stopped
   jackett:
     image: lscr.io/linuxserver/jackett
     container_name: jackett
@@ -289,135 +287,6 @@ EOF
     echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装失败······"
   fi
 }
-function insall_proxy(){
-  echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
-  read pproxy
-  if [[ ${pproxy} == "1" ]]; then
-    bash <(curl -sL https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/net/onekey-argo-tunnel.sh)
-  elif [[ ${pproxy} == "2" ]]; then
-    echoContent yellow "开始安装nginx并准备签发证书，请提前将相应域名的A记录解析到该机器······\n在下面执行步骤中，有询问y或n的地方全部输入y"
-    sleep 3s
-    bash <(curl -sL https://cdn.jsdelivr.net/gh/07031218/one-key-for-let-s-Encrypt@main/run.sh)
-    # echoContent purple  `echo -n -e "是否要对nas-tools进行反代处理,请输入Y/N："`
-    # read ppproxy
-    # if [[ ${ppproxy} == "Y" ]]||[[ ${ppproxy} == "y" ]]; then
-      read -p "请输入前面注册的域名地址,http://" domain && printf "\n"
-      sed -i '18,$d' /etc/nginx/conf.d/${domain}.conf
-      cat > proxypass.conf << EOF
-    #PROXY-START/
-    location / {
-      proxy_pass http://127.0.0.1:3000;
-    }
-    #PROXY-END/
-    location /.well-known/acme-challenge/ {
-            alias /certs/${domain}/certificate/challenges/;
-            try_files \$uri =404;
-    }
-    location /download {
-            autoindex on;
-            autoindex_exact_size off;
-            autoindex_localtime on;
-    }
-}
-EOF
-    sed  -i '17r proxypass.conf' /etc/nginx/conf.d/${domain}.conf
-    rm proxypass.conf
-    service nginx restart
-    echoContent green "反代完成，你现在可以通过https://${domain} 来访问nas-tools了"
-    # fi
-  fi
-  if [[ `lsof -i:8096|awk 'NR>1{print $2}'` != "" ]]; then
-    echoContent yellow `echo -n -e "检测到该机器安装了Emby-Server，请问是否需要反代Emby[Y/n]:"`
-    read pppproxy
-    if [[ ${pppproxy} == "Y" ]]||[[ ${pppproxy} == "y" ]]; then
-####
-      if [[ ${pproxy} == "1" ]]; then
-        bash <(curl -sL https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/net/onekey-argo-tunnel.sh)
-      elif [[ ${pproxy} == "2" ]]; then
-        echoContent yellow "开始安装nginx并准备签发证书，请提前将相应域名的A记录解析到该机器······\n在下面执行步骤中，有询问y或n的地方全部输入y"
-        sleep 3s
-        bash <(curl -sL https://cdn.jsdelivr.net/gh/07031218/one-key-for-let-s-Encrypt@main/run.sh)
-        # echoContent purple  `echo -n -e "是否要对nas-tools进行反代处理,请输入Y/N："`
-        # read ppproxy
-        # if [[ ${ppproxy} == "Y" ]]||[[ ${ppproxy} == "y" ]]; then
-          read -p "请输入前面注册的域名地址,http://" domain && printf "\n"
-          sed -i '18,$d' /etc/nginx/conf.d/${domain}.conf
-          cat > proxypass.conf << EOF
-  #PROXY-START/
-      location  ~* \.(php|jsp|cgi|asp|aspx)\$
-      {
-          proxy_pass http://127.0.0.1:8096;
-          proxy_set_header Host \$host;
-          proxy_set_header X-Real-IP \$remote_addr;
-          proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-          proxy_set_header REMOTE-HOST \$remote_addr;
-      }
-      location / {
-          proxy_pass http://127.0.0.1:8096;
-          proxy_set_header Host \$host;
-          proxy_set_header X-Real-IP \$remote_addr;
-          #proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-          proxy_set_header REMOTE-HOST \$remote_addr;
-           
-          # Plex start
-          # 解决视频预览进度条无法拖动的问题
-          proxy_set_header Range \$http_range;
-          proxy_set_header If-Range \$http_if_range;
-          proxy_no_cache \$http_range \$http_if_range;
-          
-          # 反带流式，不进行缓冲
-          client_max_body_size 0;
-          proxy_http_version 1.1;
-          proxy_request_buffering off;
-          #proxy_ignore_client_abort on;
-          
-          # 同时反带WebSocket协议
-          proxy_set_header X-Forwarded-For \$remote_addr:\$remote_port;
-          proxy_set_header Upgrade \$http_upgrade;
-          proxy_set_header Connection upgrade; 
-          
-          gzip off;
-          # Plex end
-          
-          add_header X-Cache \$upstream_cache_status;
-          
-                  
-          #Set Nginx Cache
-          add_header Cache-Control no-cache;
-          expires 12h;
-      }
-       
-      #PROXY-END/
-      location /.well-known/acme-challenge/ {
-              alias /certs/${domain}/certificate/challenges/;
-              try_files \$uri =404;
-      }
-    location /download {
-            autoindex on;
-            autoindex_exact_size off;
-            autoindex_localtime on;
-    }
-  }
-EOF
-        sed  -i '17r proxypass.conf' /etc/nginx/conf.d/${domain}.conf
-        rm proxypass.conf
-        service nginx restart
-        echoContent green "反代完成，你现在可以通过https://${domain} 来访问Emby-server了"
-        # fi
-      fi
-####
-    fi
-  fi
-}
-function check_dir_file(){
-        if [ "${1:0-1:1}" = "/" ] && [ -d "$1" ];then
-                return 0
-        elif [ -f "$1" ];then
-                return 0
-        fi
-        return 1
-}
-
 function check_rclone(){
         check_dir_file "/usr/bin/rclone"
         [ "$?" -ne 0 ] && echoContent red "未检测到rclone程序.请先安装rclone." && exit 1
