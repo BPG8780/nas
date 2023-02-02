@@ -287,7 +287,7 @@ systemctl start memory_usage
   fi  
 }
 function insall_root(){
-  echoContent red "一键修改ROOT(Y/n)"
+  echoContent yellow "一键修改ROOT(Y/n)"
   read rootyn
   if [[ ${rootyn} == "Y" ]]||[[ ${rootyn} == "y" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
@@ -296,7 +296,7 @@ function insall_root(){
   fi
 }
 function insall_XUI(){
-  echoContent red "X-UI纯IPV4/纯IPV6的VPS直接运行一键脚本(Y/n)"
+  echoContent yellow "X-UI纯IPV4/纯IPV6的VPS直接运行一键脚本(Y/n)"
   read xuiyn
   if [[ ${xuiyn} == "Y" ]]||[[ ${xuiyn} == "y" ]]; then
     wget -N https://gitlab.com/rwkgyg/x-ui-yg/raw/main/install.sh && bash install.sh
