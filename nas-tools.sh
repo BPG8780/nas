@@ -307,6 +307,8 @@ function insall_XUI(){
   else
     echo
   fi
+  sleep 2s
+  menu
 }
 function insall_Alist(){
   echoContent yellow  "一键安装Alist(1)安装(2更新)(3)卸载"
@@ -319,7 +321,9 @@ function insall_Alist(){
     curl -fsSL "https://alist.nn.ci/v3.sh" | bash -s uninstall
     else
     echo
-  fi  
+  fi
+  sleep 2s
+  menu
 }
 function insall_nezha(){
   echoContent yellow  "安装哪吒监控(1)"
