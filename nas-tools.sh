@@ -317,6 +317,15 @@ function insall_Alist(){
     echo
   fi  
 }
+function insall_nezha(){
+  echoContent yellow  "安装哪吒监控(1)"
+  read nezha
+  if [[ ${nezha} == "1" ]]; then
+    curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
+    else
+    echo
+  fi  
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -631,7 +640,8 @@ echoContent yellow "1. 一键安装Nas-tools
 5. 甲骨文(龟壳)保号脚本
 6. 一键修改ROOT密码
 7. 一键安装X-UI面板
-8. 一键安装Alist"
+8. 一键安装Alist
+9. 安装哪吒监控"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -650,7 +660,9 @@ echoContent yellow "1. 一键安装Nas-tools
     7)
       insall_XUI;;
     8)
-      insall_Alist;;      
+      insall_Alist;;
+    9)
+      insall_nezha;;       
     0)
       exit 0;;
     *)
