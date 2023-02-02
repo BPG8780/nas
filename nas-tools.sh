@@ -295,6 +295,15 @@ function insall_root(){
     echo
   fi
 }
+function insall_XUI(){
+  echoContent red "X-UI纯IPV4/纯IPV6的VPS直接运行一键脚本(Y/n)"
+  read xuiyn
+  if [[ ${xuiyn} == "Y" ]]||[[ ${xuiyn} == "y" ]]; then
+    wget -N https://gitlab.com/rwkgyg/x-ui-yg/raw/main/install.sh && bash install.sh
+  else
+    echo
+  fi
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -607,7 +616,8 @@ echoContent yellow "1. 一键安装Nas-tools
 3. Rclone获取配置
 4. Rclone挂载网盘
 5. 甲骨文(龟壳)保号脚本
-6. 一键修改ROOT密码"
+6. 一键修改ROOT密码
+6. 一键安装X-UI面板"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -623,6 +633,8 @@ echoContent yellow "1. 一键安装Nas-tools
       insall_oracle;;
     6)
       insall_root;;
+    7)
+      insall_XUI;;
     0)
       exit 0;;
     *)
