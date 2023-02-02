@@ -260,6 +260,12 @@ EOF
     echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装失败······"
   fi
 }
+function insall_oracle(){
+  echoContent purple  "龟壳占用CPU不低于15%"
+  read oracle
+  if [[ ${oracle} == "1" ]]; then
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
+}
 function insall_proxy(){
   echoContent purple  "龟壳CPU占用不低于15%来保鸡"
   read pproxy
@@ -584,7 +590,7 @@ echoContent yellow "1. 一键安装Nas-tools
     4)
       mount_drive;;
     5)
-      insall_proxy;;
+      insall_oracle;;
     0)
       exit 0;;
     *)
