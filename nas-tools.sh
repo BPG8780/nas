@@ -617,7 +617,7 @@ echoContent yellow "1. 一键安装Nas-tools
 4. Rclone挂载网盘
 5. 甲骨文(龟壳)保号脚本
 6. 一键修改ROOT密码
-6. 一键安装X-UI面板"
+7. 一键安装X-UI面板"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
