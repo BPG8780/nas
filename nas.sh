@@ -265,7 +265,9 @@ function insall_oracle(){
   read oracle
   if [[ ${oracle} == "1" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
-  fi
+  else
+    echo
+  fi  
 }
 function insall_proxy(){
   echoContent purple  "龟壳CPU占用不低于15%来保鸡"
