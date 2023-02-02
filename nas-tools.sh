@@ -52,11 +52,6 @@ function check_docker(){
     ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   fi
 }
-function root(){
-  if test -z "$(root)"; then
-    echoContent yellow "更改ROOT密码"
-    bash <(curl -sSL https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
-  fi
 function install_rclone(){
   if [[ ! -f /usr/bin/rclone ]];then
     echoContent yellow "正在安装rclone,请稍等..."
