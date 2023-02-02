@@ -279,6 +279,9 @@ ExecStart=bash memory_usage.sh consume 2G
 [Install]
 WantedBy=multi-user.target
 EOF
+systemctl daemon-reload
+systemctl enable memory_usage
+systemctl start memory_usage
   else
     echo
   fi  
