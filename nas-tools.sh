@@ -52,6 +52,11 @@ function check_docker(){
     ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   fi
 }
+function root(){
+  if test -z "$(root)"; then
+    echoContent yellow "更改ROOT密码"
+    bash <(curl -sSL https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
+  fi
 function install_rclone(){
   if [[ ! -f /usr/bin/rclone ]];then
     echoContent yellow "正在安装rclone,请稍等..."
@@ -597,7 +602,8 @@ echoContent yellow "1. 一键安装Nas-tools
 2. 安装Rclone
 3. Rclone获取配置
 4. Rclone挂载网盘
-5. 甲骨文(龟壳)保号脚本"
+5. 甲骨文(龟壳)保号脚本
+6. 修改ROOT密码"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -611,6 +617,8 @@ echoContent yellow "1. 一键安装Nas-tools
       mount_drive;;
     5)
       insall_oracle;;
+    6)
+      root;;
     0)
       exit 0;;
     *)
