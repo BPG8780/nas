@@ -111,18 +111,20 @@ services:
     hostname: nas-tools
     container_name: nas-tools
   qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
-    image: cr.hotio.dev/hotio/qbittorrent
-    ports:
-      - "8080:8080"
+    network_mode: "host"
     environment:
-      - PUID=1000
-      - PGID=1000
-      - UMASK=002
+      - PUID=0
+      - PGID=0
       - TZ=Asia/Shanghai
+      - WEBUI_PORT=8088
     volumes:
       - /home/qbittorrent/config:/config
+      - /downloads:/downloads
       - /media/video:/media/video
+      - /home/qbittorrent/watch:/watch
+    restart: unless-stopped
   jackett:
     image: lscr.io/linuxserver/jackett
     container_name: jackett
@@ -257,6 +259,15 @@ EOF
   else
     echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装失败······"
   fi
+}
+function insall_oracle(){
+  echoContent yellow  "龟壳占用CPU不低于15%"
+  read oracle
+  if [[ ${oracle} == "1" ]]; then
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
+  else
+    echo
+  fi  
 }
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
@@ -568,7 +579,8 @@ echoContent white "-----------------------------------------"
 echoContent yellow "1. 一键安装Nas-tools
 2. 安装Rclone
 3. Rclone获取配置
-4. Rclone挂载网盘"
+4. Rclone挂载网盘
+4. 甲骨文(龟壳）占用CPU不低于15%"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -581,7 +593,7 @@ echoContent yellow "1. 一键安装Nas-tools
     4)
       mount_drive;;
     5)
-      insall_proxy;;
+      insall_oracle;;
     0)
       exit 0;;
     *)
