@@ -267,8 +267,8 @@ function insall_oracle(){
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
   elif [[ ${oracle} == "2" ]]; then
     cd /root && wget -qO memory_usage.sh https://raw.githubusercontent.com/BPG8780/nas/main/memory_usage.sh && chmod +x memory_usage.sh && bash memory_usage.sh consume 2G
-  fi
-cat > /etc/systemd/system/memory_usage.service <<EOF
+  elif [[ ${oracle} == "3" ]]; then
+     cat > /etc/systemd/system/memory_usage.service <<EOF
 [Unit]
 
 [Service]
@@ -279,11 +279,6 @@ ExecStart=bash memory_usage.sh consume 2G
 [Install]
 WantedBy=multi-user.target
 EOF
-
-systemctl daemon-reload
-systemctl enable memory_usage
-systemctl memory_usage
-echo "设置一键吃内存完成。"
   else
     echo
   fi  
