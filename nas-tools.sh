@@ -287,9 +287,8 @@ systemctl start memory_usage
   fi  
 }
 function insall_root(){
-  echoContent yellow  "一键修改ROOT密码"
   read root
-  if [[ ${root} == "1" ]]; then
+  if [[ ${root} ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
   fi
 }
