@@ -304,6 +304,19 @@ function insall_XUI(){
     echo
   fi
 }
+function insall_Alist(){
+  echoContent yellow  "一键安装Alist(1)安装(2更新)(3)卸载"
+  read Alist
+  if [[ ${Alist} == "1" ]]; then
+    curl -fsSL "https://alist.nn.ci/v3.sh" | bash -s install
+  elif [[ ${Alist} == "2" ]]; then
+    curl -fsSL "https://alist.nn.ci/v3.sh" | bash -s update
+  elif [[ ${Alist} == "3" ]]; then
+    curl -fsSL "https://alist.nn.ci/v3.sh" | bash -s uninstall
+    else
+    echo
+  fi  
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -617,7 +630,8 @@ echoContent yellow "1. 一键安装Nas-tools
 4. Rclone挂载网盘
 5. 甲骨文(龟壳)保号脚本
 6. 一键修改ROOT密码
-7. 一键安装X-UI面板"
+7. 一键安装X-UI面板
+8. 一键安装Alist"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -635,6 +649,8 @@ echoContent yellow "1. 一键安装Nas-tools
       insall_root;;
     7)
       insall_XUI;;
+    8)
+      insall_Alist;;      
     0)
       exit 0;;
     *)
