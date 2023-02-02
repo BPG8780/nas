@@ -287,9 +287,10 @@ systemctl start memory_usage
   fi  
 }
 function insall_root(){
+  echoContent yellow  "一键修改ROOT密码"
   read root
-  if [[ ${root} ]]; then
-    curl -L curl -L "https://github.com/BPG8780/nas/blob/main/root.sh"
+  if [[ ${root} == "1" ]]; then
+    bash <(curl -sSL https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
   fi
 }
 function insall_proxy(){
