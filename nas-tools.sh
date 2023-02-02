@@ -289,7 +289,7 @@ systemctl start memory_usage
 function insall_root(){
   read root
   if [[ ${root} ]]; then
-    bash <(curl -sSL https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
+    curl -L curl -L "https://github.com/BPG8780/nas/blob/main/root.sh"
   fi
 }
 function insall_proxy(){
