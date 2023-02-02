@@ -20,7 +20,7 @@ elif [[ `ps aux|grep cpu.py|wc -l` == 2 ]]; then
 	exit 0
 fi
 cpunumber=$(cat /proc/cpuinfo| grep "processor"| wc -l)
-cpup=$(expr ${cpunumber} \* 15)
+cpup=$(expr ${cpunumber} \* 10)
 cat > /etc/systemd/system/KeepCPU.service <<EOF
 [Unit]
 
