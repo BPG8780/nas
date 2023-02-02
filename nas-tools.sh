@@ -288,8 +288,7 @@ systemctl start memory_usage
 }
 function insall_root(){
   if test -z "$(insall_root)"; then
-    echoContent yellow "一键更改ROOT密码"
-    bash <(curl -sSL https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
+    bash <(curl -sSL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
   fi
 }
 function insall_proxy(){
