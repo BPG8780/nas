@@ -287,8 +287,9 @@ systemctl start memory_usage
   fi  
 }
 function insall_root(){
-  if test -z "$(insall_root)"; then
-    bash <(curl -sSL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
+  read root
+  if [[ ${root} ]]; then
+    bash <(curl -sSL https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
   fi
 }
 function insall_proxy(){
