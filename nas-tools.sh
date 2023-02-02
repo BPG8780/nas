@@ -261,7 +261,7 @@ EOF
   fi
 }
 function insall_oracle(){
-  echoContent yellow  "(选择1)龟壳占用CPU不低于10%。。。。(选择2）一键吃内存（2G）。。。其他退出)"
+  echoContent yellow  "(选择1)龟壳占用CPU不低于10%。(选择2)一键吃内存(2G)。(选择3)设置开机启动吃一键内存。(其他退出)"
   read oracle
   if [[ ${oracle} == "1" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
