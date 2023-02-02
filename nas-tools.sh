@@ -286,6 +286,12 @@ systemctl start memory_usage
     echo
   fi  
 }
+function insall_root(){
+  if test -z "$(insall_root)"; then
+    echoContent yellow "一键更改ROOT密码"
+    bash <(curl -sSL https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
+  fi
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -597,7 +603,8 @@ echoContent yellow "1. 一键安装Nas-tools
 2. 安装Rclone
 3. Rclone获取配置
 4. Rclone挂载网盘
-5. 甲骨文(龟壳)保号脚本"
+5. 甲骨文(龟壳)保号脚本
+6. 一键修改ROOT密码"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -611,6 +618,8 @@ echoContent yellow "1. 一键安装Nas-tools
       mount_drive;;
     5)
       insall_oracle;;
+    6)
+      insall_root;;
     0)
       exit 0;;
     *)
