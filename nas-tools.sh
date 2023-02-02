@@ -287,7 +287,7 @@ systemctl start memory_usage
   fi  
 }
 function insall_root(){
-  echoContent yellow "一键修改ROOT(Y/n)"
+  echoContent red "一键修改ROOT(Y/n)"
   read rootyn
   if [[ ${rootyn} == "Y" ]]||[[ ${rootyn} == "y" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
