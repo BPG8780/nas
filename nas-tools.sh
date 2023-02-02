@@ -284,7 +284,9 @@ systemctl enable memory_usage
 systemctl start memory_usage
   else
     echo
-  fi  
+  fi
+  sleep 2s
+  menu
 }
 function insall_root(){
   echoContent yellow "一键修改ROOT(Y/n)"
@@ -294,6 +296,8 @@ function insall_root(){
   else
     echo
   fi
+  sleep 2s
+  menu
 }
 function insall_XUI(){
   echoContent yellow "X-UI纯IPV4/纯IPV6的VPS直接运行一键脚本(Y/n)"
