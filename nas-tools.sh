@@ -633,14 +633,14 @@ echoContent skyBlue "友情提醒：
 echoContent white "-----------------------------------------"
 echo -e "${RED}0. 退出脚本${END}"
 echoContent white "-----------------------------------------"
-echoContent yellow "1. 一键安装Nas-tools
+echoContent yellow "1. 安装Nas-tools
 2. 安装Rclone
 3. Rclone获取配置
 4. Rclone挂载网盘
 5. 甲骨文(龟壳)保号脚本
-6. 一键修改ROOT密码
-7. 一键安装X-UI面板
-8. 一键安装Alist
+6. 修改ROOT密码
+7. 安装X-UI面板
+8. 安装Alist
 9. 安装哪吒监控"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
