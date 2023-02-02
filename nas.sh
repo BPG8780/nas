@@ -261,10 +261,10 @@ EOF
   fi
 }
 function insall_proxy(){
-  echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
+  echoContent purple  "龟壳CPU占用不低于15%来保鸡"
   read pproxy
   if [[ ${pproxy} == "1" ]]; then
-    bash <(curl -sL https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/net/onekey-argo-tunnel.sh)
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
   elif [[ ${pproxy} == "2" ]]; then
     echoContent yellow "开始安装nginx并准备签发证书，请提前将相应域名的A记录解析到该机器······\n在下面执行步骤中，有询问y或n的地方全部输入y"
     sleep 3s
