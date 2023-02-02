@@ -334,6 +334,25 @@ function insall_nezha(){
     echo
   fi  
 }
+function insall_java_oci_manage(){
+  echoContent yellow  "(1)安装R探长(2)启动或重启(3)查看日志(ctrl + c退出日志)(4)终止程序(5)卸载程序"
+  read oci
+  if [[ ${oci} == "1" ]]; then
+    wget -O gz_client_bot.tar.gz  https://github.com/semicons/java_oci_manage/releases/latest/download/gz_client_bot.tar.gz && tar -zxvf gz_client_bot.tar.gz --exclude=client_config  && tar -zxvf gz_client_bot.tar.gz --skip-old-files client_config && chmod +x sh_client_bot.sh && bash sh_client_bot.sh
+   elif [[ ${oci} == "2" ]]; then
+    bash sh_client_bot.sh
+   elif [[ ${oci} == "3" ]]; then
+    tail -f log_r_client.log
+   elif [[ ${oci} == "4" ]]; then
+    ps -ef | grep r_client.jar | grep -v grep | awk '{print $2}' | xargs kill -9
+   elif [[ ${oci} == "5" ]]; then
+    rm -rf gz_client_bot.tar.gz client_config r_client.jar sh_client_bot.sh log_r_client.log debug-.log
+    else
+    echo
+  fi
+  sleep 2s
+  menu  
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -649,7 +668,8 @@ echoContent yellow "1. 安装Nas-tools
 6. 修改ROOT密码
 7. 安装X-UI面板
 8. 安装Alist
-9. 安装哪吒监控"
+9. 安装哪吒监控
+10. 安装R探长"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -670,7 +690,9 @@ echoContent yellow "1. 安装Nas-tools
     8)
       insall_Alist;;
     9)
-      insall_nezha;;       
+      insall_nezha;;
+    10)
+      insall_java_oci_manage;;      
     0)
       exit 0;;
     *)
