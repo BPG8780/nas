@@ -261,10 +261,12 @@ EOF
   fi
 }
 function insall_oracle(){
-  echoContent yellow  "龟壳占用CPU不低于15%(选择1其他退出)"
+  echoContent yellow  "(选择1)龟壳占用CPU不低于10%。。。。(选择2）一键吃内存（2G）。。。其他退出)"
   read oracle
   if [[ ${oracle} == "1" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
+  elif [[ ${oracle} == "2" ]]; then
+    cd /root && wget -qO memory_usage.sh https://raw.githubusercontent.com/BPG8780/nas/main/memory_usage.sh && chmod +x memory_usage.sh && bash memory_usage.sh consume 2G
   else
     echo
   fi  
