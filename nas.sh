@@ -570,7 +570,8 @@ echoContent white "-----------------------------------------"
 echoContent yellow "1. 一键安装Nas-tools
 2. 安装Rclone
 3. Rclone获取配置
-4. Rclone挂载网盘"
+4. Rclone挂载网盘
+5. 甲骨文(龟壳)保号"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
