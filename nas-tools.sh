@@ -366,6 +366,30 @@ function insall_java_oci_manage(){
   sleep 2s
   menu  
 }
+function check_docker1(){
+    echoContent yellow "(1)安装docker(2)安装docker-compose(3)停止所有的容器(4)启动所有的容器(5)删除所有的容器(6)删除所有的镜像"
+   read docker
+  if [[ ${docker} == "1" ]]; then
+    curl -fsSL https://get.docker.com | bash -s docker
+  fi
+  elif [[ ${docker} == "2" ]]; then
+    curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+    ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  elif [[ ${docker} == "3" ]]; then
+   docker stop $(docker ps -aq)
+  elif [[ ${docker} == "4" ]]; then
+   docker start $(docker ps -aq)
+  elif [[ ${docker} == "5" ]]; then
+  docker rm $(docker ps -aq)
+  elif [[ ${docker} == "6" ]]; then
+  docker rmi $(docker images -q)
+    else
+    echo
+  fi
+  sleep 2s
+  menu  
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -683,7 +707,8 @@ echoContent yellow "1. 安装Nas-tools
 8. 安装WARP
 9. 安装Alist
 10. 安装哪吒监控
-11. 安装R探长"
+11. 安装R探长
+12. Docker安装以管理"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -708,7 +733,9 @@ echoContent yellow "1. 安装Nas-tools
     10)
       insall_nezha;;
     11)
-      insall_java_oci_manage;;      
+      insall_java_oci_manage;;
+    12)
+      check_docker1;;
     0)
       exit 0;;
     *)
