@@ -390,6 +390,15 @@ function check_docker1(){
   sleep 2s
   menu  
 }
+function insall_BBR(){
+  echoContent yellow  "安装BBR、BBRPlus、锐速(1)"
+  read BBR
+  if [[ ${BBR} == "1" ]]; then
+    wget -O tcp.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
+    else
+    echo
+  fi  
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -708,7 +717,8 @@ echoContent yellow "1. 安装Nas-tools
 9. 安装Alist
 10. 安装哪吒监控
 11. 安装R探长
-12. Docker安装以管理"
+12. Docker安装以管理
+13. 安装BBR/BBRPlus/锐速"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -736,6 +746,8 @@ echoContent yellow "1. 安装Nas-tools
       insall_java_oci_manage;;
     12)
       check_docker1;;
+    13)
+      check_BBR;;
     0)
       exit 0;;
     *)
