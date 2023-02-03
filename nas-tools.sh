@@ -371,6 +371,7 @@ function check_docker1(){
    read docker
   if [[ ${docker} == "1" ]]; then
     curl -fsSL https://get.docker.com | bash -s docker
+    systemctl enable docker
   elif [[ ${docker} == "2" ]]; then
     curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
