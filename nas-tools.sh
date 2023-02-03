@@ -311,10 +311,12 @@ function insall_XUI(){
   menu
 }
 function insall_WARP(){
-  echoContent yellow "Cloudflare WARP多功能一键脚本(Y/n)"
+  echoContent yellow "Cloudflare WARP多功能一键脚本(Y/n) 2启动脚本"
   read warpyn
-  if [[ ${warpyn} == "Y" ]]||[[ ${xuiyn} == "y" ]]; then
+  if [[ ${warpyn} == "Y" ]]||[[ ${warpyn} == "y" ]]; then
     wget -N --no-check-certificate https://gitlab.com/rwkgyg/CFwarp/raw/main/CFwarp.sh && bash CFwarp.sh
+  elif [[ ${warpyn} == "2" ]]; then
+    ./CFwarp.sh
   else
     echo
   fi
