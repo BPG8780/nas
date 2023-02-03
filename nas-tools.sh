@@ -747,7 +747,7 @@ echoContent yellow "1. 安装Nas-tools
     12)
       check_docker1;;
     13)
-      check_BBR;;
+      insall_BBR;;
     0)
       exit 0;;
     *)
