@@ -310,6 +310,17 @@ function insall_XUI(){
   sleep 2s
   menu
 }
+function insall_WARP(){
+  echoContent yellow "Cloudflare WARP多功能一键脚本(Y/n)"
+  read warpyn
+  if [[ ${warpyn} == "Y" ]]||[[ ${xuiyn} == "y" ]]; then
+    wget -N --no-check-certificate https://gitlab.com/rwkgyg/CFwarp/raw/main/CFwarp.sh && bash CFwarp.sh
+  else
+    echo
+  fi
+  sleep 2s
+  menu
+}
 function insall_Alist(){
   echoContent yellow  "一键安装Alist(1)安装(2更新)(3)卸载"
   read Alist
@@ -667,9 +678,10 @@ echoContent yellow "1. 安装Nas-tools
 5. 甲骨文(龟壳)保号脚本
 6. 修改ROOT密码
 7. 安装X-UI面板
-8. 安装Alist
-9. 安装哪吒监控
-10. 安装R探长"
+8. 安装WARP
+9. 安装Alist
+10. 安装哪吒监控
+11. 安装R探长"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -688,10 +700,12 @@ echoContent yellow "1. 安装Nas-tools
     7)
       insall_XUI;;
     8)
-      insall_Alist;;
+      insall_WARP;;      
     9)
-      insall_nezha;;
+      insall_Alist;;
     10)
+      insall_nezha;;
+    11)
       insall_java_oci_manage;;      
     0)
       exit 0;;
