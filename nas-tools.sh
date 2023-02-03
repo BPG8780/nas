@@ -392,8 +392,8 @@ function check_docker1(){
 }
 function insall_BBR(){
   echoContent yellow  "安装BBR/BBRPlus/锐速(Y/n)"
-  read BBR
-  if [[ ${BBR} == "Y" ]]||[[ ${BBR} == "y" ]]; then
+  read BBRyn
+  if [[ ${BBRyn} == "Y" ]]||[[ ${BBRyn} == "y" ]]; then
     wget -O tcp.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
     else
     echo
