@@ -371,7 +371,6 @@ function check_docker1(){
    read docker
   if [[ ${docker} == "1" ]]; then
     curl -fsSL https://get.docker.com | bash -s docker
-  fi
   elif [[ ${docker} == "2" ]]; then
     curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
@@ -381,9 +380,9 @@ function check_docker1(){
   elif [[ ${docker} == "4" ]]; then
    docker start $(docker ps -aq)
   elif [[ ${docker} == "5" ]]; then
-  docker rm $(docker ps -aq)
+   docker rm $(docker ps -aq)
   elif [[ ${docker} == "6" ]]; then
-  docker rmi $(docker images -q)
+   docker rmi $(docker images -q)
     else
     echo
   fi
