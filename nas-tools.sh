@@ -400,15 +400,16 @@ function insall_BBR(){
   fi  
 }
 function insall_E5Sub(){
-  echoContent yellow  "Docker-compose部署E5SubBot For SQLite(1)创建e5sub目录(2)搭建ARM版(3)搭建AMD版(4)启动搭建"
+  echoContent yellow  "搭建须知先创建目录修改config.yml配置文件再启动搭建"
+  echoContent yellow  "(1)创建e5sub目录(2)搭建ARM版(3)搭建AMD版(4)启动搭建"
   read E5Sub
   if [[ ${E5Sub} == "1" ]]; then
     mkdir /opt/e5sub && touch /opt/e5sub/e5sub.db
     wget --no-check-certificate -O /opt/e5sub/config.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/BPG/main/config.yml.example
   elif [[ ${E5Sub} == "2" ]]; then
-    wget --no-check-certificate -O /opt/e5sub/config.yml https://raw.githubusercontent.com/BPG8780/BPG/main/config.yml.example
+    wget --no-check-certificate -O /opt/e5sub/docker-compose.yml https://raw.githubusercontent.com/BPG8780/BPG/main/ARM/docker-compose.yml.example
   elif [[ ${E5Sub} == "3" ]]; then
-    wget --no-check-certificate -O /opt/e5sub/config.yml https://raw.githubusercontent.com/BPG8780/BPG/main/AMD/docker-compose.yml.example
+    wget --no-check-certificate -O /opt/e5sub/docker-compose.yml https://raw.githubusercontent.com/BPG8780/BPG/main/AMD/docker-compose.yml.example
     else
     echo
   fi
