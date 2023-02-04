@@ -419,14 +419,14 @@ function insall_E5Sub(){
   menu  
 }
 function insall_dujiaoka(){
-  echoContent red  "搭建须知先。Fork《https://www.ioiox.com/archives/159.html》详细请看"
+  echoContent red  "搭建先看。。https://www.ioiox.com/archives/159.html"
   echoContent yellow  "(1)创建主目录(2)下载Docker-compose文件(3)启动搭建(4)停止服务"
   read dujiaoka
   if [[ ${dujiaoka} == "1" ]]; then
     mkdir dujiaoka && cd dujiaoka && mkdir storage uploads && chmod -R 777 storage uploads
     wget --no-check-certificate -O /root/dujiaoka/env.conf https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/dujiaoka/main/env.conf.example && chmod -R 777 env.conf
   elif [[ ${dujiaoka} == "2" ]]; then
-    wget --no-check-certificate -O /root/dujiaoka/docker-compose.yml https://github.com/BPG8780/dujiaoka/blob/main/docker-compose.yml.example
+    wget --no-check-certificate -O /root/dujiaoka/docker-compose.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/dujiaoka/main/docker-compose.yml.example
   elif [[ ${dujiaoka} == "3" ]]; then
     cd dujiaoka && docker-compose up -d
   elif [[ ${dujiaoka} == "4" ]]; then
