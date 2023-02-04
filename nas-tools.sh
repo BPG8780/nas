@@ -738,7 +738,7 @@ echoContent yellow "1. 安装Nas-tools
 11. 安装R探长
 12. Docker安装以管理
 13. 安装BBR/BBRPlus/锐速
-14. 搭建E5sub Docker部署"
+14. 搭建E5sub_Docker-compose部署"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
