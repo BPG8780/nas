@@ -399,6 +399,22 @@ function insall_BBR(){
     echo
   fi  
 }
+function insall_E5Sub(){
+  echoContent yellow  "Docker-compose部署E5SubBot For SQLite(1)创建e5sub目录(2)创建数据库文件(3)下载配置文件(4)搭建ARM_E5SubBot(5)搭建AMD_E5SubBot"
+  read E5Sub
+  if [[ ${E5Sub} == "1" ]]; then
+    mkdir /opt/e5sub && touch /opt/e5sub/e5sub.db
+    wget --no-check-certificate -O /opt/e5sub/config.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/BPG/main/config.yml.example
+  elif [[ ${E5Sub} == "2" ]]; then
+    touch /opt/e5sub/e5sub.db
+  elif [[ ${E5Sub} == "3" ]]; then
+    wget --no-check-certificate -O /opt/e5sub/config.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/BPG/main/config.yml.example   
+    else
+    echo
+  fi
+  sleep 2s
+  menu
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -718,7 +734,8 @@ echoContent yellow "1. 安装Nas-tools
 10. 安装哪吒监控
 11. 安装R探长
 12. Docker安装以管理
-13. 安装BBR/BBRPlus/锐速"
+13. 安装BBR/BBRPlus/锐速
+14. 搭建E5sub Docker部署"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -748,6 +765,8 @@ echoContent yellow "1. 安装Nas-tools
       check_docker1;;
     13)
       insall_BBR;;
+    14)
+      insall_E5Sub;;      
     0)
       exit 0;;
     *)
