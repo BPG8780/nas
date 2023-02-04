@@ -419,7 +419,7 @@ function insall_E5Sub(){
   menu  
 }
 function insall_dujiaoka(){
-  echoContent red  "搭建须知先创建目录修改config.yml配置文件再启动搭建"
+  echoContent red  "搭建须知先。Fork《https://www.ioiox.com/archives/159.html》详细请看"
   echoContent yellow  "(1)创建主目录(2)下载Docker-compose文件(3)启动搭建(4)停止服务"
   read dujiaoka
   if [[ ${dujiaoka} == "1" ]]; then
