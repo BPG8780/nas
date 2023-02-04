@@ -418,6 +418,26 @@ function insall_E5Sub(){
   sleep 2s
   menu  
 }
+function insall_dujiaoka(){
+  echoContent red  "搭建须知先创建目录修改config.yml配置文件再启动搭建"
+  echoContent yellow  "(1)创建主目录(2)下载Docker-compose文件(3)启动搭建(4)停止服务"
+  read dujiaoka
+  if [[ ${dujiaoka} == "1" ]]; then
+    mkdir dujiaoka && cd dujiaoka && mkdir storage uploads && chmod -R 777 storage uploads
+    wget --no-check-certificate -O /dujiaoka/env.conf https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/dujiaoka/main/env.conf.example
+    chmod -R 777 env.conf
+  elif [[ ${dujiaoka} == "2" ]]; then
+    wget --no-check-certificate -O /dujiaoka/docker-compose.yml https://github.com/BPG8780/dujiaoka/blob/main/docker-compose.yml.example
+  elif [[ ${dujiaoka} == "3" ]]; then
+    docker-compose up -d
+  elif [[ ${dujiaoka} == "4" ]]; then
+    docker-compose down
+    else
+    echo
+  fi
+  sleep 2s
+  menu  
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -738,7 +758,8 @@ echoContent yellow "1. 安装Nas-tools
 11. 安装R探长
 12. Docker安装以管理
 13. 安装BBR/BBRPlus/锐速
-14. 搭建E5sub_Docker-compose部署"
+14. 搭建E5sub_Docker-compose部署
+15. 搭建独角数卡Docker-compose部署"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -769,7 +790,9 @@ echoContent yellow "1. 安装Nas-tools
     13)
       insall_BBR;;
     14)
-      insall_E5Sub;;      
+      insall_E5Sub;;
+    15)
+      insall_dujiaoka;;  
     0)
       exit 0;;
     *)
