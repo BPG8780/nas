@@ -400,7 +400,7 @@ function insall_BBR(){
   fi  
 }
 function insall_E5Sub(){
-  echoContent yellow  "搭建须知先创建目录修改config.yml配置文件再启动搭建"
+  echoContent red  "搭建须知先创建目录修改config.yml配置文件再启动搭建"
   echoContent yellow  "(1)创建e5sub目录(2)搭建ARM版(3)搭建AMD版(4)启动搭建"
   read E5Sub
   if [[ ${E5Sub} == "1" ]]; then
