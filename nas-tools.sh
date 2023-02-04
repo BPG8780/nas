@@ -412,8 +412,7 @@ function insall_E5Sub(){
     wget --no-check-certificate -O /opt/e5sub/docker-compose.yml https://raw.githubusercontent.com/BPG8780/BPG/main/AMD/docker-compose.yml.example
   elif [[ ${E5Sub} == "4" ]]; the
     cd /opt/e5sub && docker-compose up -d
-    else
-    echo
+   echo
   fi
   sleep 2s
   menu
