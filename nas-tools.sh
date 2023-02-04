@@ -404,14 +404,14 @@ function insall_E5Sub(){
   echoContent yellow  "(1)创建e5sub目录(2)搭建ARM版(3)搭建AMD版(4)启动搭建"
   read E5Sub
   if [[ ${E5Sub} == "1" ]]; then
-    mkdir /opt/e5sub && touch /opt/e5sub/e5sub.db && cd /opt/e5sub
+    mkdir /opt/e5sub && touch /opt/e5sub/e5sub.db
     wget --no-check-certificate -O /opt/e5sub/config.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/BPG/main/config.yml.example
   elif [[ ${E5Sub} == "2" ]]; then
     wget --no-check-certificate -O /opt/e5sub/docker-compose.yml https://raw.githubusercontent.com/BPG8780/BPG/main/ARM/docker-compose.yml.example
   elif [[ ${E5Sub} == "3" ]]; then
     wget --no-check-certificate -O /opt/e5sub/docker-compose.yml https://raw.githubusercontent.com/BPG8780/BPG/main/AMD/docker-compose.yml.example
-  elif [[ ${E5Sub} == "4" ]]; the
-   docker-compose up -d
+  elif [[ ${E5Sub} == "4" ]]; then
+   cd /opt/e5sub && docker-compose up -d
     else
     echo
   fi
