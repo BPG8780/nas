@@ -428,9 +428,9 @@ function insall_dujiaoka(){
   elif [[ ${dujiaoka} == "2" ]]; then
     wget --no-check-certificate -O /root/dujiaoka/docker-compose.yml https://github.com/BPG8780/dujiaoka/blob/main/docker-compose.yml.example
   elif [[ ${dujiaoka} == "3" ]]; then
-    cd /root/dujiaoka && docker-compose up -d
+    cd dujiaoka && docker-compose up -d
   elif [[ ${dujiaoka} == "4" ]]; then
-    cd /root/dujiaoka && docker-compose down
+    cd dujiaoka && docker-compose down
     else
     echo
   fi
