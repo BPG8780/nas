@@ -425,7 +425,6 @@ function insall_dujiaoka(){
   if [[ ${dujiaoka} == "1" ]]; then
     mkdir dujiaoka && cd dujiaoka && mkdir storage uploads && chmod -R 777 storage uploads
     wget --no-check-certificate -O /dujiaoka/env.conf https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/dujiaoka/main/env.conf.example
-    chmod -R 777 env.conf
   elif [[ ${dujiaoka} == "2" ]]; then
     wget --no-check-certificate -O /dujiaoka/docker-compose.yml https://github.com/BPG8780/dujiaoka/blob/main/docker-compose.yml.example
   elif [[ ${dujiaoka} == "3" ]]; then
