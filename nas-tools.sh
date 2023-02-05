@@ -111,19 +111,27 @@ services:
     hostname: nas-tools
     container_name: nas-tools
   qbittorrent:
-    image: ghcr.io/linuxserver/qbittorrent:latest
+    image: nevinee/qbittorrent
     container_name: qbittorrent
-    network_mode: "host"
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=Asia/Shanghai
-      - WEBUI_PORT=8088
+    restart: always
+    tty: true
+    network_mode: bridge
+    hostname: qbitorrent
     volumes:
-      - /home/qbittorrent/config:/config
-      - /downloads:/downloads
-      - /media/video:/media/video
-      - /home/qbittorrent/watch:/watch
+      - /home/qbittorrent/data:/data
+      - /media/video:/media/video    
+    tmpfs:
+      - /tmp
+    environment:          
+      - WEBUI_PORT=8080   
+      - BT_PORT=34567     
+      - PUID=0         
+      - PGID=0
+      - TZ=Asia/Shanghai         
+    ports:
+      - 8080:8080        
+      - 34567:34567      
+      - 34567:34567/udp
     restart: unless-stopped
   jackett:
     image: lscr.io/linuxserver/jackett
