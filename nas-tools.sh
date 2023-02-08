@@ -343,8 +343,6 @@ function insall_Alist(){
     else
     echo
   fi
-  sleep 2s
-  menu
 }
 function insall_nezha(){
   echoContent yellow  "安装哪吒监控(1)"
