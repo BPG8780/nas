@@ -736,7 +736,7 @@ function menu(){
 #                      脚本Fork翔翎居                             #
 #                   Nas-tools 一键梭哈脚本                        #
 #                  Emby开心版是ARM64/AMD64                        #
-#                博客：https://bug.878088.xyz                     #
+#                粑屁TG：https://t.me/BPG878                      #
 #                        粑屁修改版                               #
 #                                                                 #
 #                                                                 #
