@@ -447,7 +447,7 @@ function insall_cloudflared(){
   echoContent yellow  "cloudflared tunnel一键部署更新版(1)"
   read cloudflared
   if [[ ${cloudflared} == "1" ]]; then
-    bash <(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/net/onekey-argo-tunnel.sh)
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/onekey-argo-tunnel.sh)
     else
     echo
   fi  
