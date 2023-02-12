@@ -443,6 +443,15 @@ function insall_dujiaoka(){
   sleep 2s
   menu  
 }
+function insall_cloudflared(){
+  echoContent yellow  "cloudflared tunnel一键部署更新版(1)"
+  read cloudflared
+  if [[ ${cloudflared} == "1" ]]; then
+    bash <(curl -sL https://raw.githubusercontent.com/07031218/normal-shell/net/onekey-argo-tunnel.sh)
+    else
+    echo
+  fi  
+}
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
@@ -764,7 +773,8 @@ echoContent yellow "1. 安装Nas-tools
 12. Docker安装以管理
 13. 安装BBR/BBRPlus/锐速
 14. 搭建E5sub_Docker-compose部署
-15. 搭建独角数卡Docker-compose部署"
+15. 搭建独角数卡Docker-compose部署
+16. Cloudflared tunnel一键部署"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -797,7 +807,9 @@ echoContent yellow "1. 安装Nas-tools
     14)
       insall_E5Sub;;
     15)
-      insall_dujiaoka;;  
+      insall_dujiaoka;;
+    16)
+      insall_cloudflared;;      
     0)
       exit 0;;
     *)
