@@ -269,27 +269,16 @@ EOF
   fi
 }
 function insall_oracle(){
-  echoContent yellow  "(选择1)龟壳占用CPU不低于10%。(选择2)一键吃内存(2G)。(选择3)设置开机启动吃一键内存。(其他退出)"
+  echoContent yellow  "(选择1)单纯CPU占用不低于10%。(选择2)CPU+内存同时占用。(选择3)停止运行脚本卸载"
   read oracle
   if [[ ${oracle} == "1" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
   elif [[ ${oracle} == "2" ]]; then
-    cd /root && wget -qO memory_usage.sh https://raw.githubusercontent.com/BPG8780/nas/main/memory_usage.sh && chmod +x memory_usage.sh && bash memory_usage.sh consume 2G
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh) -cm
   elif [[ ${oracle} == "3" ]]; then
-     cat > /etc/systemd/system/memory_usage.service <<EOF
-[Unit]
-
-[Service]
-WorkingDirectory=/root
-CPUQuota=30%
-ExecStart=bash memory_usage.sh consume 2G
-
-[Install]
-WantedBy=multi-user.target
-EOF
-systemctl daemon-reload
-systemctl enable memory_usage
-systemctl start memory_usage
+    systemctl stop KeepCpuMemory
+		systemctl disable KeepCpuMemory
+		rm /root/cpumemory.py && rm /etc/systemd/system/KeepCpuMemory.service
   else
     echo
   fi
