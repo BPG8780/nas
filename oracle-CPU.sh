@@ -75,11 +75,7 @@ EOF
 	# 配置CPU、内存占用结束
 }
 remove(){
-	if [[ -f /root/cpu.py ]]; then
-		systemctl stop KeepCPU
-		systemctl disable KeepCPU
-		rm /root/cpu.py && rm /etc/systemd/system/KeepCPU.service
-	elif [[ -f /root/cpumemory.py ]]; then
+	if [[ -f /root/cpumemory.py ]]; then
 		systemctl stop KeepCpuMemory
 		systemctl disable KeepCpuMemory
 		rm /root/cpumemory.py && rm /etc/systemd/system/KeepCpuMemory.service
