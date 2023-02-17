@@ -281,7 +281,15 @@ function insall_oracle(){
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -cm
   elif [[ ${oracle} == "3" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -S
-    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -SP
+    cat > /usr/lib/systemd/system/Speedtest.timer <<EOF
+[Unit]
+Description=Runs mytimer every hour
+[Timer]
+OnUnitActiveSec=12h
+Unit=Speedtest.service
+[Install]
+WantedBy=multi-user.target
+EOF
   elif [[ ${oracle} == "4" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -SP
     systemctl start Speedtest.timer
