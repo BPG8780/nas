@@ -90,7 +90,7 @@ EOF
 }
 config_Speedtest.timer(){
 	# 配置Speedtest.timer
-	cat > /usr/lib/systemd/system/Speedtest.service <<EOF
+	cat > /usr/lib/systemd/system/Speedtest.timer <<EOF
 [Unit]
 Description=Runs mytimer every hour
 
