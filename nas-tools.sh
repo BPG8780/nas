@@ -269,12 +269,12 @@ EOF
   fi
 }
 function insall_oracle(){
+  echoContent yellow  "(选择1)单纯CPU占用不低于10%。(选择2)CPU+内存同时占用。(选择3)停止运行脚本卸载"
+  read oracle
   if test -z "$(which speedtest-cli)"; then
     echoContent yellow "检测到系统未安装speedtest-cli，开始安装speedtest-cli"
     apt install speedtest-cli || yum install speedtest-cli
   fi
-  echoContent yellow  "(选择1)单纯CPU占用不低于10%。(选择2)CPU+内存同时占用。(选择3)停止运行脚本卸载"
-  read oracle
   if [[ ${oracle} == "1" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
   elif [[ ${oracle} == "2" ]]; then
