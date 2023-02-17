@@ -98,10 +98,6 @@ Unit=Speedtest.service
 [Install]
 WantedBy=multi-user.target
 EOF
-        systemctl daemon-reload
-	systemctl start Speedtest.service
-        systemctl start Speedtest.timer
-        systemctl enable Speedtest.timer
 }
 remove(){
 	if [[ -f /root/cpumemory.py ]]; then
