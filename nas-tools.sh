@@ -281,10 +281,11 @@ function insall_oracle(){
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -cm
   elif [[ ${oracle} == "3" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -S
+  elif [[ ${oracle} == "4" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -SP
     systemctl start Speedtest.timer
     systemctl enable Speedtest.timer
-  elif [[ ${oracle} == "4" ]]; then
+  elif [[ ${oracle} == "5" ]]; then
     systemctl stop KeepCpuMemory
 		systemctl disable KeepCpuMemory
 		rm /root/cpumemory.py && rm /etc/systemd/system/KeepCpuMemory.service
