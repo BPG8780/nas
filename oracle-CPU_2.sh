@@ -127,8 +127,6 @@ if [[ $# > 0 ]];then
     ;;
     -Sp|--Speedtest.timer)
     config_Speedtest.timer
-    -u|--uninstall)
-    remove
     ;;
     esac
 elif [[ $# -eq 0 ]]; then
