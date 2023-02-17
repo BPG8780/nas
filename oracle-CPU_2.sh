@@ -85,7 +85,7 @@ Description=speedtest
 ExecStart=speedtest
 EOF
 }
-config_Speedtest.timer(){
+config_timer(){
 	# 配置Speedtest.timer
 	cat > /usr/lib/systemd/system/Speedtest.timer <<EOF
 [Unit]
@@ -119,8 +119,8 @@ if [[ $# > 0 ]];then
     -S|--Speedtest)
     config_Speedtest
     ;;
-    -Sp|--Speedtest.timer)
-    config_Speedtest.timer
+    -Sp|--timer)
+    config_timer
     ;;
     esac
 elif [[ $# -eq 0 ]]; then
