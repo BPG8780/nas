@@ -276,10 +276,15 @@ function insall_oracle(){
     apt install speedtest-cli || yum install speedtest-cli
   fi
   if [[ ${oracle} == "1" ]]; then
-    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh)
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh)
   elif [[ ${oracle} == "2" ]]; then
-    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU.sh) -cm
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -cm
   elif [[ ${oracle} == "3" ]]; then
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -S
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -SP
+    systemctl start Speedtest.timer
+    systemctl enable Speedtest.timer
+  elif [[ ${oracle} == "4" ]]; then
     systemctl stop KeepCpuMemory
 		systemctl disable KeepCpuMemory
 		rm /root/cpumemory.py && rm /etc/systemd/system/KeepCpuMemory.service
