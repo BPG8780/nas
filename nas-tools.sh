@@ -290,6 +290,11 @@ Unit=Speedtest.service
 [Install]
 WantedBy=multi-user.target
 EOF
+  echo 2
+  else
+    echo
+  fi  
+  systemctl start Speedtest.service && systemctl start Speedtest.timer && systemctl enable Speedtest.timer && systemctl status Speedtest.timer
   elif [[ ${oracle} == "4" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh) -SP
     systemctl start Speedtest.timer
