@@ -269,7 +269,7 @@ EOF
   fi
 }
 function insall_oracle(){
-  echoContent yellow  "(选择1)单纯CPU占用不低于10%(选择2)CPU+内存同时占用(选择3)设置12小时占用网络(选择3)停止运行脚本卸载"
+  echoContent yellow  "(选择1)单纯CPU占用不低于10%(选择2)CPU+内存同时占用(选择3)设置每十二小时占用网络一次(选择4)停止运行脚本卸载"
   read oracle
   if test -z "$(which speedtest-cli)"; then
     echoContent yellow "检测到系统未安装speedtest-cli，开始安装speedtest-cli"
@@ -291,9 +291,6 @@ Unit=Speedtest.service
 WantedBy=multi-user.target
 EOF
   echo 2
-  else
-    echo
-  fi  
   systemctl start Speedtest.service && systemctl start Speedtest.timer && systemctl enable Speedtest.timer && systemctl status Speedtest.timer
   elif [[ ${oracle} == "4" ]]; then
     systemctl stop KeepCpuMemory
