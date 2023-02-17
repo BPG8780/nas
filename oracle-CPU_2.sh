@@ -83,9 +83,6 @@ Description=speedtest
 
 [Service]
 ExecStart=speedtest
-
-[Install]
-WantedBy=multi-user.target
 EOF
 }
 config_Speedtest.timer(){
