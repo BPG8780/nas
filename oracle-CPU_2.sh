@@ -122,7 +122,7 @@ if [[ $# > 0 ]];then
     -cm|--cpumemory)
     config_cpu_memory
     ;;
-	-S|--Speedtest)
+    -S|--Speedtest)
     config_Speedtest
     ;;
     -Sp|--Speedtest.timer)
