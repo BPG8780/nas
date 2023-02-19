@@ -458,14 +458,70 @@ function insall_cloudflared(){
     echo
   fi  
 }
-function insall_Halo(){
-  echoContent yellow  "一键安装Halo博客(1)安装(2更新)(3)卸载"
-  read Halo
-  if [[ ${Halo} == "1" ]]; then
-    mkdir ~/halo && cd ~/halo
-    else
+  if [[ `docker ps|grep halo` != "" ]]; then
     echo
+    echoContent red "⚠️ 检测到本机已安装过halo,程序退出······"
+    exit 1
   fi
+  mkdir ~/halo && cd ~/halo
+  cat >/halo/docker-compose.yml <<EOF
+version: "3"
+
+services:
+  halo:
+    image: halohub/halo:2.2.0
+    container_name: halo
+    restart: on-failure:3
+    depends_on:
+      halodb:
+        condition: service_healthy
+    networks:
+      halo_network:
+    volumes:
+      - ./:/root/.halo2
+    ports:
+      - "8090:8090"
+    command:
+      - --spring.r2dbc.url=r2dbc:pool:postgresql://halodb/halo
+      - --spring.r2dbc.username=halo
+      # PostgreSQL 的密码，请保证与下方 POSTGRES_PASSWORD 的变量值一致。
+      - --spring.r2dbc.password=openpostgresql
+      - --spring.sql.init.platform=postgresql
+      # 外部访问地址，请根据实际需要修改
+      - --halo.external-url=http://localhost:8090/
+      # 初始化的超级管理员用户名
+      - --halo.security.initializer.superadminusername=admin
+      # 初始化的超级管理员密码
+      - --halo.security.initializer.superadminpassword=P@88w0rd
+  halodb:
+    image: postgres:latest
+    container_name: halodb
+    restart: on-failure:3
+    networks:
+      halo_network:
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_PASSWORD=openpostgresql
+      - POSTGRES_USER=halo
+      - POSTGRES_DB=halo
+      - PGUSER=halo
+
+networks:
+  halo_network:
+EOF
+  echo 2
+  else
+    echo
+  fi  
+  docker-compose -f /halo/docker-compose.yml up -d
 }
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
