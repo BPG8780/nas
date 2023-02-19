@@ -92,7 +92,7 @@ version: "3"
 services: 
 #自动追剧必备
   nas-tools:
-    image: ddsderek/nas-tools:latest
+    image: diluka/nas-tools:latest
     ports:
       - 3000:3000
     volumes:
