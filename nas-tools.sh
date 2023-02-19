@@ -516,7 +516,6 @@ services:
 networks:
   halo_network:
 EOF
-    else
     echo
   fi
 }
