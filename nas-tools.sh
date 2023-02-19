@@ -458,6 +458,7 @@ function insall_cloudflared(){
     echo
   fi  
 }
+function install_Halo(){
   if [[ `docker ps|grep halo` != "" ]]; then
     echo
     echoContent red "⚠️ 检测到本机已安装过halo,程序退出······"
@@ -516,6 +517,11 @@ services:
 networks:
   halo_network:
 EOF
+  echo 2
+  else
+    echo
+  fi  
+  docker-compose -f /halo/docker-compose.yml up -d
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
   read pproxy
