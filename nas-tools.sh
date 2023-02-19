@@ -780,8 +780,7 @@ echoContent yellow "1. 安装Nas-tools
 13. 安装BBR/BBRPlus/锐速
 14. 搭建E5sub_Docker-compose部署
 15. 搭建独角数卡Docker-compose部署
-16. Cloudflared tunnel一键部署
-17. 安装Halo博客"
+16. Cloudflared tunnel一键部署"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -817,8 +816,6 @@ echoContent yellow "1. 安装Nas-tools
       insall_dujiaoka;;
     16)
       insall_cloudflared;;
-    17)
-      insall_Halo;;
     0)
       exit 0;;
     *)
