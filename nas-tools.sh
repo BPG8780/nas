@@ -493,11 +493,11 @@ services:
       - --halo.security.initializer.superadminusername=admin
       # 初始化的超级管理员密码
       - --halo.security.initializer.superadminpassword=P@88w0rd
-  halodb:
-    image: postgres:latest
-    container_name: halodb
-    restart: on-failure:3
-    networks:
+    halodb:
+      image: postgres:latest
+      container_name: halodb
+      restart: on-failure:3
+   networks:
       halo_network:
     volumes:
       - ./db:/var/lib/postgresql/data
@@ -513,9 +513,8 @@ services:
       - POSTGRES_USER=halo
       - POSTGRES_DB=halo
       - PGUSER=halo
-
-networks:
-  halo_network:
+    networks:
+      halo_network:
 EOF
   echo 2
   else
