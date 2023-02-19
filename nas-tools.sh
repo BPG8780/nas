@@ -463,10 +463,9 @@ function insall_cloudflared(){
     echoContent red "⚠️ 检测到本机已安装过halo,程序退出······"
     exit 1
   fi
-  mkdir ~/halo && cd ~/halo
+  mkdir ~/halo
   cat >/halo/docker-compose.yml <<EOF
 version: "3"
-
 services:
   halo:
     image: halohub/halo:2.2.0
