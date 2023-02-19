@@ -516,10 +516,6 @@ services:
 networks:
   halo_network:
 EOF
-  elif [[ ${Halo} == "2" ]]; then
-    curl -fsSL "https://alist.nn.ci/v3.sh" | bash -s update
-  elif [[ ${Halo} == "3" ]]; then
-    curl -fsSL "https://alist.nn.ci/v3.sh" | bash -s uninstall
     else
     echo
   fi
