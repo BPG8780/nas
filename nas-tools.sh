@@ -463,8 +463,6 @@ function insall_Halo(){
   read Halo
   if [[ ${Halo} == "1" ]]; then
     mkdir ~/halo && cd ~/halo
-    exit 1
-  fi
   cat >/halo/docker-compose.yml <<EOF
 version: "3"
 services:
@@ -516,8 +514,6 @@ services:
 networks:
   halo_network:
 EOF
-    echo
-  fi
 }
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
