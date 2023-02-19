@@ -517,9 +517,6 @@ services:
 networks:
   halo_network:
 EOF
-  echo 2
-  else
-    echo
   fi  
   docker-compose -f /halo/docker-compose.yml up -d
 }
