@@ -517,8 +517,6 @@ services:
 networks:
   halo_network:
 EOF
-  fi  
-  docker-compose -f /halo/docker-compose.yml up -d
 }
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
