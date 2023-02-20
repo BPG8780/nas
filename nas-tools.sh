@@ -90,7 +90,6 @@ function install_nas-tools(){
   cat >/root/docker-compose.yml <<EOF
 version: "3"
 services: 
-#自动追剧必备
   nas-tools:
     image: diluka/nas-tools:latest
     ports:
@@ -191,13 +190,14 @@ EOF
     image: codion/emby_crack:4.7.6.0-ARM
     container_name: emby
     environment:
-      - PUID=0
-      - PGID=0
-      - GIDLIST=0
+      - PUID=1000
+      - PGID=1000
+      - GIDLIST=022
       - TZ=Asia/Shanghai
     volumes:
       - /home/emby/programdata:/config
       - /media/video:/media/video
+      - /media/video2:/media/video2
     ports:
       - 8096:8096
       - 8920:8920
@@ -212,13 +212,14 @@ elif [ "$emby" = "2" ]; then
     image: codion/emby_crack:4.7.6.0-X86
     container_name: emby
     environment:
-      - PUID=0
-      - PGID=0
-      - GIDLIST=0
+      - PUID=1000
+      - PGID=1000
+      - GIDLIST=022
       - TZ=Asia/Shanghai
     volumes:
       - /home/emby/programdata:/config
       - /media/video:/media/video
+      - /media/video2:/media/video2
     ports:
       - 8096:8096
       - 8920:8920
@@ -718,7 +719,7 @@ KillMode=none
 Restart=on-failure
 RestartSec=5
 User = root
-ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --multi-thread-streams 1024 --multi-thread-cutoff 128M --network-mode --vfs-cache-mode minimal --vfs-cache-max-age 10s --cache-dir=/tmp/vfs_cache --vfs-cache-max-size 100G --vfs-read-chunk-size-limit off --buffer-size 64K --vfs-read-chunk-size 64K --vfs-read-wait 0ms --vfs-read-chunk-size-limit 64K --log-level INFO --log-file=/media/rclone.log
+ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 000 --allow-other --allow-non-empty --cache-dir=/tmp/vfs_cache --vfs-cache-mode full --buffer-size 256M --vfs-read-ahead 512M --vfs-read-chunk-size 32M --vfs-read-chunk-size-limit 128M --vfs-cache-max-size 20G --vfs-cache-max-age 10s
 ExecStop=/bin/fusermount -u ${path}
 Restart = on-abort
 [Install]
