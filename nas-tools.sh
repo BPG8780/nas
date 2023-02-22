@@ -126,6 +126,7 @@ services:
       - BT_PORT=34567     
       - PUID=0         
       - PGID=0
+      - PGROUPS=0
       - TZ=Asia/Shanghai         
     ports:
       - 8080:8080        
