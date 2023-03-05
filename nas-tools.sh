@@ -91,7 +91,7 @@ function install_nas-tools(){
 version: "3"
 services: 
   nas-tools:
-    image: diluka/nas-tools:latest
+    image: jxxghp/nas-tools:latest
     ports:
       - 3000:3000
     volumes:
