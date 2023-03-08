@@ -720,7 +720,7 @@ KillMode=none
 Restart=on-failure
 RestartSec=5
 User = root
-ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 0000 --default-permissions --allow-non-empty --allow-other --transfers 4 --buffer-size 32M --low-level-retries 200 --vfs-cache-max-age 10s --multi-thread-streams 1024 --multi-thread-cutoff 128M --network-mode --vfs-cache-mode minimal --vfs-cache-max-size 100G --vfs-cache-max-age 24h --vfs-read-chunk-size-limit off --buffer-size 64K --vfs-read-chunk-size 64K --vfs-read-wait 0ms -v --vfs-read-chunk-size-limit 64K --vfs-read-wait 0ms --cache-dir=/tmp/vfs_cache
+ExecStart = /usr/bin/rclone mount ${list[rclone_config_name]}: ${path} --umask 0000 --default-permissions --allow-non-empty --allow-other --transfers 8 --buffer-size 128M --low-level-retries 200 --vfs-cache-max-age 10s --multi-thread-streams 1024 --multi-thread-cutoff 128M --network-mode --vfs-cache-mode full --vfs-cache-max-size 100G --vfs-read-chunk-size-limit off --buffer-size 64K --vfs-read-chunk-size 64K --vfs-read-wait 0ms -v --vfs-read-chunk-size-limit 100G --vfs-read-wait 0ms --cache-dir=/tmp/vfs_cache
 ExecStop=/bin/fusermount -u ${path}
 Restart = on-abort
 [Install]
