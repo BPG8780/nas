@@ -442,7 +442,7 @@ function insall_dujiaoka(){
   elif [[ ${dujiaoka} == "2" ]]; then
     wget --no-check-certificate -O /root/dujiaoka/docker-compose.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/dujiaoka/main/docker-compose.yml.example
   elif [[ ${dujiaoka} == "3" ]]; then
-    cd /dujiaoka && docker-compose up -d
+    docker-compose -f /root/dujiaoka/docker-compose.yml up -d
   elif [[ ${dujiaoka} == "4" ]]; then
     cd /dujiaoka && docker-compose down
     else
