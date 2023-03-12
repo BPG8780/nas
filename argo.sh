@@ -78,7 +78,7 @@ installCloudFlared() {
 	exit 1
     fi
     
-    wget https://github.com/cloudflare/cloudflared/releases/download/2023.2.2/cloudflared-linux-$(archAffix) -O /usr/local/bin/cloudflared
+    wget -N --no-check-certificate https://github.com/cloudflare/cloudflared/releases/download/$last_version/cloudflared-linux-$(archAffix) -O /usr/local/bin/cloudflared
     chmod +x /usr/local/bin/cloudflared
     checkStatus
     
