@@ -384,7 +384,7 @@ function check_docker1(){
     echoContent yellow "(0)安装Docker备份(1)安装docker(2)安装docker-compose(3)停止所有的容器(4)启动所有的容器(5)删除所有的容器(6)删除所有的镜像"
    read docker
   if [[ ${docker} == "0" ]]; then
-  mkdir /home/duplicati
+  mkdir /home/duplicati && cd /home/duplicati
   cat >/home/duplicati/docker-compose.yml <<EOF
 version: "3"
 services:
