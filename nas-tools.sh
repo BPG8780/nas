@@ -430,7 +430,6 @@ services:
     restart: unless-stopped
 EOF
    echo 2
-  else
     echo
   fi  
   docker-compose -f /home/duplicati/docker-compose.yml up -d
