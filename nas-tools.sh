@@ -430,8 +430,7 @@ services:
     restart: unless-stopped
 EOF
    echo 2
-    echo
-  fi  
+    echo  
   docker-compose -f /home/duplicati/docker-compose.yml up -d
 function insall_BBR(){
   echoContent yellow  "安装BBR/BBRPlus/锐速(Y/n)"
