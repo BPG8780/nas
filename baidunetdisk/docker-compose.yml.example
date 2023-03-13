@@ -8,5 +8,4 @@ services:
       - /home/baidunetdisk:/config
       - /downloads:/downloads
       - /media/video:/media/video
-      - /home/baidunetdisk:/config/baidunetdiskdownload
     restart: unless-stopped
