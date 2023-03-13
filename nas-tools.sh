@@ -404,38 +404,6 @@ function check_docker1(){
   sleep 2s
   menu  
 }
-function install_duplicati(){
-  if [[ `docker ps|grep duplicati` != "" ]]; then
-    echo
-    echoContent red "⚠️ 检测到本机已安装过Docker备份,程序退出······"
-    exit 1
-  fi
-  cat >/home/duplicati/docker-compose.yml <<EOF
-version: "3"
-services:
-  duplicati:
-    image: lscr.io/linuxserver/duplicati:latest
-    container_name: duplicati
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=Asia/Shanghai
-    volumes:
-      - /home/duplicati/appdata/config:/config
-      - /home/duplicati/backups:/backups
-      - /media/video:/media/video
-      - /home/duplicati/source:/source
-    ports:
-      - 8200:8200
-    restart: unless-stopped
-EOF
-   echo 2
-  else
-    echo
-  fi  
-  docker-compose -f /home/duplicati/docker-compose.yml up -d
-  if [[ $? -eq 0 ]]; then
-    echoContent green "Docker备份安装完毕······"
 function insall_BBR(){
   echoContent yellow  "安装BBR/BBRPlus/锐速(Y/n)"
   read BBRyn
@@ -824,7 +792,6 @@ echoContent yellow "1. 安装Nas-tools
 10. 安装哪吒监控
 11. 安装R探长
 12. Docker安装以管理
-121.Docker备份
 13. 安装BBR/BBRPlus/锐速
 14. 搭建E5sub_Docker-compose部署
 15. 搭建独角数卡Docker-compose部署
@@ -857,8 +824,6 @@ echoContent yellow "1. 安装Nas-tools
       insall_java_oci_manage;;
     12)
       check_docker1;;
-    121)
-      install_duplicati;;
     13)
       insall_BBR;;
     14)
