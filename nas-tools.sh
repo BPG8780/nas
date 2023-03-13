@@ -483,18 +483,26 @@ function insall_cloudflared(){
     echo
   fi  
 }
-function insall_Halo(){
-  echoContent yellow  "安装Halo博客"
-  read Halo
-  if [[ ${Halo} == "1" ]]; then
-    mkdir ~/halo && cd ~/halo
-	cat >docker-compose.yml <<EOF
-EOF	
-  else
+function insall_baidunetdisk(){
+  echoContent red  "百度网盘Web界面访问端口5800"
+  echoContent yellow  "(1)创建目录(2)启动搭建(3)运行(4)停止(5)删除容器"
+  read baidunetdisk
+  if [[ ${baidunetdisk} == "1" ]]; then
+    mkdir /home/baidunetdisk
+    wget --no-check-certificate -O /home/baidunetdisk/docker-compose.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/baidunetdisk/docker-compose.yml.example
+  elif [[ ${baidunetdisk} == "2" ]]; then
+    cd /home/baidunetdisk && docker-compose up -d
+    elif [[ ${baidunetdisk} == "3" ]]; then
+    cd /home/baidunetdisk && docker start baidunetdisk
+    elif [[ ${baidunetdisk} == "4" ]]; then
+    cd /home/baidunetdisk && docker stop baidunetdisk
+    elif [[ ${baidunetdisk} == "5" ]]; then
+    cd /home/baidunetdisk && docker rm baidunetdisk
+    else
     echo
   fi
   sleep 2s
-  menu
+  menu  
 }
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
@@ -818,7 +826,8 @@ echoContent yellow "1. 安装Nas-tools
 13. 安装BBR/BBRPlus/锐速
 14. 搭建E5sub_Docker-compose部署
 15. 搭建独角数卡Docker-compose部署
-16. Cloudflared tunnel一键部署"
+16. Cloudflared tunnel一键部署
+17. 百度网盘WEB界面"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -855,7 +864,7 @@ echoContent yellow "1. 安装Nas-tools
     16)
       insall_cloudflared;;
     17)
-      insall_Halo;;
+      insall_baidunetdisk;;
     0)
       exit 0;;
     *)
