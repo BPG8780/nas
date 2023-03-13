@@ -430,8 +430,12 @@ services:
     restart: unless-stopped
 EOF
    echo 2
-    echo  
+  else
+    echo
+  fi  
   docker-compose -f /home/duplicati/docker-compose.yml up -d
+  if [[ $? -eq 0 ]]; then
+    echoContent green "Docker备份安装完毕······"
 function insall_BBR(){
   echoContent yellow  "安装BBR/BBRPlus/锐速(Y/n)"
   read BBRyn
