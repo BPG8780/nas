@@ -1,0 +1,12 @@
+version: "3"
+services: 
+  baidunetdisk:
+    image: johngong/baidunetdisk:latest
+    ports:
+      - 5800:5800
+    volumes:
+      - /home/baidunetdisk:/config
+      - /downloads:/downloads
+      - /media/video:/media/video
+      - /home/baidunetdisk:/config/baidunetdiskdownload
+    restart: unless-stopped
