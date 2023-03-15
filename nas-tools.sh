@@ -394,9 +394,9 @@ services:
   volumes:
       - /home/backup:app/backup
       - /media/video:/media/video
-    ports:
+  ports:
       - 9977:9977
-    restart: unless-stopped
+  restart: unless-stopped
 EOF
   echo 2
   docker-compose -f /home/backup/docker-compose.yml up -d
