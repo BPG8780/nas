@@ -396,7 +396,7 @@ services:
       - /media/video:/media/video
     ports:
       - 9977:9977
-    restart=always
+    restart: unless-stopped
 EOF
   echo 2
   docker-compose -f /home/backup-x/docker-compose.yml up -d
