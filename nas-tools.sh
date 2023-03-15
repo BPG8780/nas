@@ -384,28 +384,22 @@ function check_docker1(){
     echoContent yellow "(0)安装Docker备份(1)安装docker(2)安装docker-compose(3)停止所有的容器(4)启动所有的容器(5)删除所有的容器(6)删除所有的镜像"
    read docker
   if [[ ${docker} == "0" ]]; then
-  mkdir /home/duplicati && cd /home/duplicati
+  mkdir /home/backup-x && cd /home/backup-x
   cat >/home/duplicati/docker-compose.yml <<EOF
 version: "3"
 services:
   duplicati:
-    image: lscr.io/linuxserver/duplicati:latest
-    container_name: duplicati
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=Asia/Shanghai
-    volumes:
-      - /home/duplicati/appdata/config:/config
-      - /home/duplicati/backups:/backups
+    image: jeessy/backup-x
+    container_name: backup-x
+  volumes:
+      - /home/backup-x-files:app/backup-x-files
       - /media/video:/media/video
-      - /home/duplicati/source:/source
     ports:
-      - 8200:8200
-    restart: unless-stopped
+      - 9977:9977
+    restart=always
 EOF
   echo 2
-  docker-compose -f /home/duplicati/docker-compose.yml up -d
+  docker-compose -f /home/backup-x/docker-compose.yml up -d
   elif [[ ${docker} == "1" ]]; then
     curl -fsSL https://get.docker.com | bash -s docker
     systemctl enable docker
