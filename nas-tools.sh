@@ -172,16 +172,6 @@ services:
     ports:
       - 19035:19035
     restart: unless-stopped
-  nginx-proxy-manager-zh:
-    image: 'chishin/nginx-proxy-manager-zh:latest'
-    restart: always
-    ports:
-      - '800:800'
-      - '81:81'
-      - '443:443'
-    volumes:
-      - /home/nginx/data:/data
-      - /home/nginx/letsencrypt:/etc/letsencrypt
 EOF
   echoContent yellow `echo -ne "请问是否安装Emby开心版到本机《《《特别注意(1)是ARM版本,(2)是AMD版本》》》[n/不用]"`
   read emby
@@ -234,7 +224,7 @@ EOF
   fi  
   docker-compose -f /root/docker-compose.yml up -d
   if [[ $? -eq 0 ]]; then
-    echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装完毕······"
+    echoContent green "qbittorrent、jackett、flaresolverr、chinesesubfinder安装完毕······"
     echoContent yellow "开始将检测网盘挂载状态写入开机启动项···"
     cat >/etc/init.d/check <<EOF
 #!/bin/bash
@@ -262,12 +252,12 @@ EOF
     update-rc.d check defaults
     echoContent green "检测网盘挂载状态写入开机启动项完成···"
     if [[ ${embyyn} == "Y" ]]||[[ ${embyyn} == "y" ]]; then
-      echoContent green "qbittorrent端口8080（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
+      echoContent green "qbittorrent端口8080（初始用户名admin，密码adminadmin）,nas-tools端口3000(默认用户名admin,密码password), Emby端口:8096"
     else
-      echoContent green "qbittorrent端口8080（初始用户名admin，密码adminadmin, nas-tools端口3000(默认用户名admin,密码password), nginx端口81(Email: admin@example.com,密码changeme)，Emby端口:8096"
+      echoContent green "qbittorrent端口8080（初始用户名admin，密码adminadmin, nas-tools端口3000(默认用户名admin,密码password), Emby端口:8096"
     fi
   else
-    echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder、nginx安装失败······"
+    echoContent red "qbittorrent、jackett、flaresolverr、chinesesubfinder、安装失败······"
   fi
 }
 function insall_oracle(){
