@@ -801,8 +801,6 @@ echoContent yellow "1. 安装Nas-tools
 4. Rclone挂载网盘
 5. 甲骨文(龟壳)保号脚本
 6. 修改ROOT密码
-7. 安装X-UI面板
-8. 安装WARP
 9. 安装Alist
 10. 安装哪吒监控
 11. 安装R探长
@@ -826,11 +824,7 @@ echoContent yellow "1. 安装Nas-tools
     5)
       insall_oracle;;
     6)
-      insall_root;;
-    7)
-      insall_XUI;;
-    8)
-      insall_WARP;;      
+      insall_root;;  
     9)
       insall_Alist;;
     10)
