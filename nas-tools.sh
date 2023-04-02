@@ -415,7 +415,7 @@ function insall_BBR(){
   echoContent yellow  "安装BBR/BBRPlus/锐速(Y/n)"
   read BBRyn
   if [[ ${BBRyn} == "Y" ]]||[[ ${BBRyn} == "y" ]]; then
-    wget -O tcp.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
+    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcpx.sh)
     else
     echo
   fi  
