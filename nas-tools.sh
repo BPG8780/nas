@@ -294,11 +294,8 @@ EOF
   sleep 2s
   menu
 }
-function install_root(){
-  echoContent yellow "开始一键修改ROOT权限"
-  sleep 2s
-  bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
-  menu
+function insall_root(){
+   bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
 }
 function insall_XUI(){
   echoContent yellow "X-UI纯IPV4/纯IPV6的VPS直接运行一键脚本(Y/n)"
