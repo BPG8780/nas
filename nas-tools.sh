@@ -417,7 +417,7 @@ function insall_proxy(){
       cat > proxypass.conf << EOF
     #PROXY-START/
     location / {
-      proxy_pass http://127.0.0.1:9000;
+      proxy_pass http://127.0.0.1:3000;
     }
     #PROXY-END/
     location /.well-known/acme-challenge/ {
