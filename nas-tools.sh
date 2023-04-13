@@ -297,30 +297,6 @@ EOF
 function insall_root(){
    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
 }
-function insall_XUI(){
-  echoContent yellow "X-UI纯IPV4/纯IPV6的VPS直接运行一键脚本(Y/n)"
-  read xuiyn
-  if [[ ${xuiyn} == "Y" ]]||[[ ${xuiyn} == "y" ]]; then
-    wget -N https://gitlab.com/rwkgyg/x-ui-yg/raw/main/install.sh && bash install.sh
-  else
-    echo
-  fi
-  sleep 2s
-  menu
-}
-function insall_WARP(){
-  echoContent yellow "Cloudflare WARP多功能一键脚本(Y/n) 2启动脚本"
-  read warpyn
-  if [[ ${warpyn} == "Y" ]]||[[ ${warpyn} == "y" ]]; then
-    wget -N --no-check-certificate https://gitlab.com/rwkgyg/CFwarp/raw/main/CFwarp.sh && bash CFwarp.sh
-  elif [[ ${warpyn} == "2" ]]; then
-    ./CFwarp.sh
-  else
-    echo
-  fi
-  sleep 2s
-  menu
-}
 function insall_Alist(){
   echoContent yellow  "一键安装Alist(1)安装(2更新)(3)卸载"
   read Alist
@@ -335,9 +311,7 @@ function insall_Alist(){
   fi
 }
 function install_nezha(){
-  echoContent yellow "开始安装哪吒监控"
-  sleep 2s # 等待2秒
-  curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
+   curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
 }
 function insall_java_oci_manage(){
   echoContent yellow  "(1)安装R探长(2)启动或重启(3)查看日志(ctrl + c退出日志)(4)终止程序(5)卸载程序"
@@ -359,25 +333,8 @@ function insall_java_oci_manage(){
   menu  
 }
 function check_docker1(){
-    echoContent yellow "(0)安装Docker备份(1)安装docker(2)安装docker-compose(3)停止所有的容器(4)启动所有的容器(5)删除所有的容器(6)删除所有的镜像"
+    echoContent yellow "(1)安装docker(2)安装docker-compose(3)停止所有的容器(4)启动所有的容器(5)删除所有的容器(6)删除所有的镜像"
    read docker
-  if [[ ${docker} == "0" ]]; then
-  mkdir /home/backup && cd /home/backup
-  cat >/home/backup/docker-compose.yml <<EOF
-version: "3"
-services:
-  backup-x:
-    image: jeessy/backup-x
-    container_name: backup-x
-  volumes:
-      - /home/backup:app/backup
-      - /media/video:/media/video
-  ports:
-      - 9977:9977
-  restart: unless-stopped
-EOF
-  echo 2
-  docker-compose -f /home/backup/docker-compose.yml up -d
   elif [[ ${docker} == "1" ]]; then
     curl -fsSL https://get.docker.com | bash -s docker
     systemctl enable docker
@@ -400,13 +357,7 @@ EOF
   menu  
 }
 function insall_BBR(){
-  echoContent yellow  "安装BBR/BBRPlus/锐速(Y/n)"
-  read BBRyn
-  if [[ ${BBRyn} == "Y" ]]||[[ ${BBRyn} == "y" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcpx.sh)
-    else
-    echo
-  fi  
 }
 function insall_E5Sub(){
   echoContent red  "搭建须知先创建目录修改config.yml配置文件再启动搭建"
@@ -447,34 +398,7 @@ function insall_dujiaoka(){
   menu  
 }
 function insall_cloudflared(){
-  echoContent yellow  "cloudflared tunnel一键部署更新版(1)"
-  read cloudflared
-  if [[ ${cloudflared} == "1" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/onekey-argo-tunnel.sh)
-    else
-    echo
-  fi  
-}
-function insall_baidunetdisk(){
-  echoContent red  "百度网盘Web界面访问端口5800"
-  echoContent yellow  "(1)创建目录(2)启动搭建(3)运行(4)停止(5)删除容器"
-  read baidunetdisk
-  if [[ ${baidunetdisk} == "1" ]]; then
-    mkdir /home/baidunetdisk
-    wget --no-check-certificate -O /home/baidunetdisk/docker-compose.yml https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/baidunetdisk/docker-compose.yml.example
-  elif [[ ${baidunetdisk} == "2" ]]; then
-    cd /home/baidunetdisk && docker-compose up -d
-    elif [[ ${baidunetdisk} == "3" ]]; then
-    cd /home/baidunetdisk && docker start baidunetdisk
-    elif [[ ${baidunetdisk} == "4" ]]; then
-    cd /home/baidunetdisk && docker stop baidunetdisk
-    elif [[ ${baidunetdisk} == "5" ]]; then
-    cd /home/baidunetdisk && docker rm baidunetdisk
-    else
-    echo
-  fi
-  sleep 2s
-  menu  
 }
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
@@ -797,8 +721,7 @@ echoContent yellow "1. 安装Nas-tools
 13. 安装BBR/BBRPlus/锐速
 14. 搭建E5sub_Docker-compose部署
 15. 搭建独角数卡Docker-compose部署
-16. Cloudflared tunnel一键部署
-17. 百度网盘WEB界面"
+16. Cloudflared tunnel一键部署"
   read -p "请选择输入菜单对应数字开始执行：" select_menu
   case "${select_menu}" in
     1)
@@ -832,8 +755,6 @@ echoContent yellow "1. 安装Nas-tools
       insall_dujiaoka;;
     16)
       insall_cloudflared;;
-    17)
-      insall_baidunetdisk;;
     0)
       exit 0;;
     *)
