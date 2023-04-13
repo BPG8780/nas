@@ -746,9 +746,9 @@ WantedBy = multi-user.target" > /lib/systemd/system/rclone-${list[rclone_config_
                 echo -e "`curr_date` 未找到fuse包.正在安装..."
                 sleep 1s
                 if [[ "${release}" = "centos" ]];then
-                        yum install fuse -y
+                        yum update && yum install fuse3
                 elif [[ "${release}" = "debian" || "${release}" = "ubuntu" ]];then
-                        apt-get install fuse -y
+                        apt update -y && apt-get install fuse3
                 fi
                 echo
                 echo -e "`curr_date` fuse安装完成."
