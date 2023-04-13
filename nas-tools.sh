@@ -296,9 +296,8 @@ EOF
 }
 function install_root(){
   echoContent yellow "开始一键修改ROOT权限"
-  sleep 2s # 等待2秒
-  bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
   sleep 2s
+  bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
   menu
 }
 function insall_XUI(){
