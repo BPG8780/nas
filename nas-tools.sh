@@ -294,14 +294,10 @@ EOF
   sleep 2s
   menu
 }
-function insall_root(){
-  echoContent yellow "一键修改ROOT(Y/n)"
-  read rootyn
-  if [[ ${rootyn} == "Y" ]]||[[ ${rootyn} == "y" ]]; then
-    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
-  else
-    echo
-  fi
+function install_root(){
+  echoContent yellow "开始一键修改ROOT权限"
+  sleep 2s # 等待2秒
+  bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
   sleep 2s
   menu
 }
@@ -342,14 +338,10 @@ function insall_Alist(){
     echo
   fi
 }
-function insall_nezha(){
-  echoContent yellow  "安装哪吒监控(1)"
-  read nezha
-  if [[ ${nezha} == "1" ]]; then
-    curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
-    else
-    echo
-  fi  
+function install_nezha(){
+  echoContent yellow "开始安装哪吒监控"
+  sleep 2s # 等待2秒
+  curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
 }
 function insall_java_oci_manage(){
   echoContent yellow  "(1)安装R探长(2)启动或重启(3)查看日志(ctrl + c退出日志)(4)终止程序(5)卸载程序"
