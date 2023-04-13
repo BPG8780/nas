@@ -335,7 +335,7 @@ function insall_java_oci_manage(){
 function check_docker1(){
     echoContent yellow "(1)安装docker(2)安装docker-compose(3)停止所有的容器(4)启动所有的容器(5)删除所有的容器(6)删除所有的镜像"
     read docker
-  elif [[ ${docker} == "1" ]]; then
+  if [[ ${docker} == "1" ]]; then
     curl -fsSL https://get.docker.com | bash -s docker
     systemctl enable docker
   elif [[ ${docker} == "2" ]]; then
