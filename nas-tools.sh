@@ -402,39 +402,41 @@ function insall_cloudflared(){
 }
 function insall_proxy(){
   echoContent purple  "请选择反代方式：\n1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)\n2、Nginx反代"
-  read pproxy
-  if [[ ${pproxy} == "1" ]]; then
-    bash <(curl -sL https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/net/onekey-argo-tunnel.sh)
-  elif [[ ${pproxy} == "2" ]]; then
-    echoContent yellow "开始安装nginx并准备签发证书，请提前将相应域名的A记录解析到该机器······\n在下面执行步骤中，有询问y或n的地方全部输入y"
-    sleep 3s
-    bash <(curl -sL https://cdn.jsdelivr.net/gh/07031218/one-key-for-let-s-Encrypt@main/run.sh)
-    # echoContent purple  `echo -n -e "是否要对nas-tools进行反代处理,请输入Y/N："`
-    # read ppproxy
-    # if [[ ${ppproxy} == "Y" ]]||[[ ${ppproxy} == "y" ]]; then
-      read -p "请输入前面注册的域名地址,http://" domain && printf "\n"
-      sed -i '18,$d' /etc/nginx/conf.d/${domain}.conf
-      cat > proxypass.conf << EOF
-    #PROXY-START/
-    location / {
-      proxy_pass http://127.0.0.1:3000;
-    }
-    #PROXY-END/
-    location /.well-known/acme-challenge/ {
-            alias /certs/${domain}/certificate/challenges/;
-            try_files \$uri =404;
-    }
-    location /download {
-            autoindex on;
-            autoindex_exact_size off;
-            autoindex_localtime on;
-    }
+  read echoContent purple "请选择反代方式：
+1、Cloudflared Tunnel穿透(墙内建议选择此项，域名需要托管在Cloudflare)
+2、Nginx反代"
+read pproxy
+if [[ ${pproxy} == "1" ]]; then
+  bash <(curl -sL https://ghproxy.20120714.xyz/https://raw.githubusercontent.com/07031218/normal-shell/net/onekey-argo-tunnel.sh)
+elif [[ ${pproxy} == "2" ]]; then
+  echoContent yellow "开始安装nginx并准备签发证书，请提前将相应域名的A记录解析到该机器······在下面执行步骤中，有询问y或n的地方全部输入y"
+  sleep 3s
+  bash <(curl -sL https://cdn.jsdelivr.net/gh/07031218/one-key-for-let-s-Encrypt@main/run.sh)
+  read -p "请输入已经注册的域名地址,http://" domain
+  # 删除旧的反代配置
+  sed -i '/#PROXY-START/,/#PROXY-END/d' /etc/nginx/conf.d/${domain}.conf
+  # 添加新的反代配置
+  cat > proxypass.conf << EOF
+#PROXY-START/
+location / {
+    proxy_pass http://127.0.0.1:3000;
+}
+#PROXY-END/
+location /.well-known/acme-challenge/ {
+    alias /certs/${domain}/certificate/challenges/;
+    try_files \$uri =404;
+}
+location /download {
+    autoindex on;
+    autoindex_exact_size off;
+    autoindex_localtime on;
 }
 EOF
-    sed  -i '17r proxypass.conf' /etc/nginx/conf.d/${domain}.conf
-    rm proxypass.conf
-    service nginx restart
-    echoContent green "反代完成，你现在可以通过https://${domain} 来访问nas-tools了"
+  # 将新的配置添加到文件中
+  sed -i '17r proxypass.conf' /etc/nginx/conf.d/${domain}.conf
+  rm proxypass.conf
+  service nginx restart
+  echoContent green "反代完成，现在可以通过 https://${domain} 来访问 nas-tools 了"
     # fi
   fi
   if [[ `lsof -i:8096|awk 'NR>1{print $2}'` != "" ]]; then
