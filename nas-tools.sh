@@ -265,7 +265,7 @@ function insall_oracle(){
   read oracle
   if test -z "$(which speedtest-cli)"; then
     echoContent yellow "检测到系统未安装speedtest-cli，开始安装speedtest-cli"
-    apt install speedtest-cli || yum install speedtest-cli
+    apt -y update && apt install speedtest-cli || yum -y update yum && install speedtest-cli
   fi
   if [[ ${oracle} == "1" ]]; then
     bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/oracle-CPU_2.sh)
@@ -296,6 +296,9 @@ EOF
 }
 function insall_root(){
    bash <(curl -sL https://ghproxy.com/https://raw.githubusercontent.com/BPG8780/nas/main/root.sh)
+}
+function insall_ipv(){
+   bash <(curl -sL https://raw.githubusercontent.com/BPG8780/nas/main/ipv.sh)
 }
 function insall_Alist(){
   echoContent yellow  "一键安装Alist(1)安装(2更新)(3)卸载"
@@ -713,6 +716,7 @@ echoContent yellow "1. 安装Nas-tools
 5. 甲骨文(龟壳)保号脚本
 6. 修改ROOT密码
 7. 反代Nas-tools
+8. IPV4/6优先级调整
 9. 安装Alist
 10. 安装哪吒监控
 11. 安装R探长
@@ -738,6 +742,8 @@ echoContent yellow "1. 安装Nas-tools
       insall_root;;
     7)
       insall_proxy;;
+    8)
+      insall_ipv;;
     9)
       insall_Alist;;
     10)
