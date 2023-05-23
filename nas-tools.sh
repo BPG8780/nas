@@ -92,7 +92,7 @@ function install_nas-tools(){
 version: "3"
 services: 
   nas-tools:
-    image: jxxghp/nas-tools:latest
+    image: nastool/nas-tools:latest
     ports:
       - 3000:3000
     volumes:
