@@ -657,7 +657,7 @@ Restart = on-abort
 WantedBy = multi-user.target" > /lib/systemd/system/rclone-${list[rclone_config_name]}.service
         sleep 2s
         echo -e "`curr_date` 服务创建成功。"
-        if [ ! -f /etc/fuse.conf ]; then
+        if ! command -v fuse3 &> /dev/null; then
                 echo -e "`curr_date` 未找到fuse包.正在安装..."
                 sleep 1s
                 if [[ "${release}" = "centos" ]];then
