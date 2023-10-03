@@ -92,7 +92,7 @@ function install_nas-tools(){
 version: "3"
 services: 
   nas-tools:
-    image: nastool/nas-tools:latest
+    image: nastool/nas-tools::2.9.1
     ports:
       - 3000:3000
     volumes:
